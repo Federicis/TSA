@@ -4,7 +4,7 @@ import Main from "./components/Main"
 
 function App() {
   return (
-    <Main /> // using the Main component
+    <Main prop1={"abcd"} prop2={"efgh"}/> // using the Main component
   );
 }
 

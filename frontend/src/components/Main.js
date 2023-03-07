@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 
-export default function Main() {
+export default function Main({ prop1, prop2 }) { // props are data passed from the parent component
     // state is data that makes every component update when it changes
-    const [state, setState] = useState("abcd");
+    const [state, setState] = useState(prop1);
 
     // setState is the function that changes the state
     const changeState = () => {
-        if(state === "abcd") setState("efgh");
-        else setState("abcd");
+        if(state === prop1) setState(prop2);
+        else setState(prop1);
     }
 
     // useEffect is used for functions that need to run
