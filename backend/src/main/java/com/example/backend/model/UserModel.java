@@ -34,7 +34,6 @@ public class UserModel implements UserDetails {
     private String username;
     private String password;
 
-    @Enumerated(EnumType.STRING)
     private Role role;
 
     // returns a list of the user's roles
