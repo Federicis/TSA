@@ -1,8 +1,6 @@
 package com.example.backend.model;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

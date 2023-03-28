@@ -22,13 +22,16 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthFilter;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf()
-                .disable()
+                .cors().and().csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("") // urls that don't need authentication
+
+                // urls that are not secured
+                .requestMatchers("/api/v1/auth/**")
                 .permitAll()
+
+                // all the other requests
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -36,7 +39,16 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authenticationProvider(authenticationProvider)
+
+                // adding jwt filter
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+
+        // handling logout
+        // .logout()
+        // .logoutUrl("/api/v1/auth/logout")
+        // .addLogoutHandler()
+        // .logoutSuccessHandler((request, response, authentication) ->
+        // SecurityContextHolder.clearContext());
 
         return http.build();
     }
