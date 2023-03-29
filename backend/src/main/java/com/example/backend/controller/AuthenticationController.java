@@ -18,9 +18,6 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
-        System.out.println(request);
-
-        // return ResponseEntity.ok(null);
         return ResponseEntity.ok(authenticationService.register(request));
     }
 
