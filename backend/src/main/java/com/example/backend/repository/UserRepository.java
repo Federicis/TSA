@@ -10,11 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends JpaRepository<UserModel, Long> {
     Optional<UserModel> findByUsername(String username);
-<<<<<<< HEAD
 
     Optional<UserModel> findByVerificationToken(String verificationToken);
 
-=======
-    
->>>>>>> ebbac47037a3ec7f996931ab97900c882f84b4cb
 }
