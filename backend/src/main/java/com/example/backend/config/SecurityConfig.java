@@ -11,8 +11,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.example.backend.filter.JwtAuthenticationFilter;
 
+<<<<<<< HEAD
 import static org.springframework.security.config.Customizer.withDefaults;
 
+=======
+>>>>>>> ebbac47037a3ec7f996931ab97900c882f84b4cb
 import lombok.RequiredArgsConstructor;
 
 @Configuration
@@ -37,8 +40,14 @@ public class SecurityConfig {
                 .anyRequest()
                 .authenticated()
                 .and()
+<<<<<<< HEAD
                 .sessionManagement(management -> management
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+=======
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+>>>>>>> ebbac47037a3ec7f996931ab97900c882f84b4cb
                 .authenticationProvider(authenticationProvider)
 
                 // adding jwt filter
