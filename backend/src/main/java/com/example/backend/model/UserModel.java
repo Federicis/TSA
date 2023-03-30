@@ -2,7 +2,7 @@ package com.example.backend.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Collection;
@@ -13,6 +13,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Column;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,7 +21,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Builder
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users")
@@ -32,6 +33,10 @@ public class UserModel implements UserDetails {
     private String username;
     private String password;
     private String role;
+    private boolean enabled;
+
+    @Column(length = 64)
+    private String verificationToken;
 
     // returns a list of the user's roles
     @Override
@@ -56,6 +61,6 @@ public class UserModel implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 }
