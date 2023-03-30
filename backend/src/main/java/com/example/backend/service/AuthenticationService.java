@@ -3,9 +3,13 @@ package com.example.backend.service;
 import java.io.UnsupportedEncodingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -81,9 +85,10 @@ public class AuthenticationService {
                 UserModel userByUsername = userRepository.findByUsername(request.getUsername()).orElse(null);
                 UserModel userByEmail = userRepository.findByEmail(request.getEmail()).orElse(null);
 
+                // user already exists => conflict
                 if (userByEmail != null || userByUsername != null) {
                         return AuthenticationResponse.builder()
-                                        .success(false)
+                                        .status(HttpStatus.CONFLICT)
                                         .token(null)
                                         .build();
                 }
@@ -107,37 +112,49 @@ public class AuthenticationService {
                 // send verification email and handle exceptions
                 try {
                         sendVerificationEmail(user, siteURL);
-                } catch (UnsupportedEncodingException e) {
-                        System.out.println("sendVerificationEmail UnsupportedEncodingException");
-                        e.printStackTrace();
-                } catch (MessagingException e) {
-                        System.out.println("sendVerificationEmail MessagingException");
+                } catch (UnsupportedEncodingException | MessagingException e) {
+                        System.out.println("Error while sending verification email.");
                         e.printStackTrace();
                 }
 
                 // generate and return token
                 String jwt = jwtService.generateToken(user);
                 return AuthenticationResponse.builder()
-                                .success(true)
+                                .status(HttpStatus.OK)
                                 .token(jwt)
                                 .build();
         }
 
         public AuthenticationResponse login(LoginRequest request) {
                 // actual authentication
-                authenticationManager.authenticate(
-                                new UsernamePasswordAuthenticationToken(
-                                                request.getUsername(),
-                                                request.getPassword()));
+                try {
+                        authenticationManager.authenticate(
+                                        new UsernamePasswordAuthenticationToken(
+                                                        request.getUsername(),
+                                                        request.getPassword()));
+
+                } catch (DisabledException | LockedException e) {
+                        // account is locked / disabled => forbidden
+                        return AuthenticationResponse.builder()
+                                        .status(HttpStatus.FORBIDDEN)
+                                        .token(null)
+                                        .build();
+
+                } catch (BadCredentialsException e) {
+                        // bad credentials => unauthorized
+                        return AuthenticationResponse.builder()
+                                        .status(HttpStatus.UNAUTHORIZED)
+                                        .token(null)
+                                        .build();
+                }
 
                 // find user in db
-                UserModel user = userRepository.findByUsername(request.getUsername())
-                                .orElseThrow();
+                UserModel user = userRepository.findByUsername(request.getUsername()).orElseThrow();
 
                 // generate and return token
                 String jwt = jwtService.generateToken(user);
                 return AuthenticationResponse.builder()
-                                .success(true)
+                                .status(HttpStatus.OK)
                                 .token(jwt)
                                 .build();
         }

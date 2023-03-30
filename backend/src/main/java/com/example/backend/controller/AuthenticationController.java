@@ -26,27 +26,25 @@ public class AuthenticationController {
     public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
         AuthenticationResponse registerResponse = authenticationService.register(request, "localhost:8080");
 
-        // return 409: Conflict if email / username already exists
-        if (registerResponse.isSuccess() == false) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(registerResponse);
-        }
-
-        return ResponseEntity.ok(registerResponse);
+        return ResponseEntity.status(registerResponse.getStatus()).body(registerResponse);
     }
 
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(@RequestBody LoginRequest request) {
-        return ResponseEntity.ok(authenticationService.login(request));
+
+        AuthenticationResponse loginResponse = authenticationService.login(request);
+
+        return ResponseEntity.status(loginResponse.getStatus()).body(loginResponse);
     }
 
     @GetMapping("/verify")
     public ResponseEntity<String> verifyUser(@Param("code") String code) {
         boolean verified = authenticationService.verifyUser(code);
 
-        if (verified) {
-            return ResponseEntity.status(HttpStatus.OK).body("");
+        if (!verified) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("");
         }
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("");
+        return ResponseEntity.status(HttpStatus.OK).body("");
     }
 }
