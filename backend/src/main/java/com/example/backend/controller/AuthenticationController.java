@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.backend.DTO.Auth.AuthenticationResponse;
 import com.example.backend.DTO.Auth.LoginRequest;
 import com.example.backend.DTO.Auth.RegisterRequest;
 import com.example.backend.service.AuthenticationService;
@@ -23,7 +24,14 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
-        return ResponseEntity.ok(authenticationService.register(request, "localhost:8080"));
+        AuthenticationResponse registerResponse = authenticationService.register(request, "localhost:8080");
+
+        // return 409: Conflict if email / username already exists
+        if (registerResponse.isSuccess() == false) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(registerResponse);
+        }
+
+        return ResponseEntity.ok(registerResponse);
     }
 
     @PostMapping("/login")

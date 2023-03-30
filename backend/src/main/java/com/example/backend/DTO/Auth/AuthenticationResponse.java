@@ -1,4 +1,4 @@
-package com.example.backend.controller;
+package com.example.backend.DTO.Auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,5 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthenticationResponse {
+    private boolean success;
     private String token;
 }

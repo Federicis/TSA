@@ -10,9 +10,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.backend.DTO.Auth.AuthenticationResponse;
 import com.example.backend.DTO.Auth.LoginRequest;
 import com.example.backend.DTO.Auth.RegisterRequest;
-import com.example.backend.controller.AuthenticationResponse;
 import com.example.backend.model.UserModel;
 import com.example.backend.repository.UserRepository;
 
@@ -77,6 +77,17 @@ public class AuthenticationService {
         }
 
         public AuthenticationResponse register(RegisterRequest request, String siteURL) {
+                // verify that the username and email are unique
+                UserModel userByUsername = userRepository.findByUsername(request.getUsername()).orElse(null);
+                UserModel userByEmail = userRepository.findByEmail(request.getEmail()).orElse(null);
+
+                if (userByEmail != null || userByUsername != null) {
+                        return AuthenticationResponse.builder()
+                                        .success(false)
+                                        .token(null)
+                                        .build();
+                }
+
                 // generate random string for the verification token
                 String randomToken = RandomString.make(64);
 
@@ -107,6 +118,7 @@ public class AuthenticationService {
                 // generate and return token
                 String jwt = jwtService.generateToken(user);
                 return AuthenticationResponse.builder()
+                                .success(true)
                                 .token(jwt)
                                 .build();
         }
@@ -125,6 +137,7 @@ public class AuthenticationService {
                 // generate and return token
                 String jwt = jwtService.generateToken(user);
                 return AuthenticationResponse.builder()
+                                .success(true)
                                 .token(jwt)
                                 .build();
         }
