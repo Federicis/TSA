@@ -20,6 +20,8 @@ import lombok.RequiredArgsConstructor;
 
 import com.example.backend.service.JwtService;
 
+import io.jsonwebtoken.Claims;
+
 @Component
 @RequiredArgsConstructor
 // validates the access token before any request that needs authorization
@@ -44,7 +46,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         // the rest of the string after the "Bearer" keyword
         final String accessToken = authHeader.substring(7);
 
-        final String username = jwtService.extractUsername(accessToken);
+        final String username = jwtService.extractClaim(accessToken, jwtService.getJwtSecret(), Claims::getSubject);
 
         // user is not authenticated
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
@@ -52,7 +54,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
             // token is valid
-            if (jwtService.validateToken(accessToken, userDetails)) {
+            if (jwtService.validateAccessToken(accessToken, userDetails)) {
 
                 // this is needed in order to update security context
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(

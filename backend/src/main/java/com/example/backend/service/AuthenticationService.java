@@ -3,6 +3,7 @@ package com.example.backend.service;
 import java.io.UnsupportedEncodingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -17,7 +18,9 @@ import org.springframework.stereotype.Service;
 import com.example.backend.DTO.Auth.AuthenticationResponse;
 import com.example.backend.DTO.Auth.LoginRequest;
 import com.example.backend.DTO.Auth.RegisterRequest;
+import com.example.backend.model.RefreshTokenModel;
 import com.example.backend.model.UserModel;
+import com.example.backend.repository.RefreshTokenRepository;
 import com.example.backend.repository.UserRepository;
 
 import jakarta.mail.MessagingException;
@@ -29,6 +32,7 @@ import net.bytebuddy.utility.RandomString;
 @RequiredArgsConstructor
 public class AuthenticationService {
         private final UserRepository userRepository;
+        private final RefreshTokenRepository refreshTokenRepository;
         private final PasswordEncoder passwordEncoder;
         private final JwtService jwtService;
         private final AuthenticationManager authenticationManager;
@@ -36,7 +40,10 @@ public class AuthenticationService {
         @Autowired
         private final JavaMailSender mailSender;
 
-        private void sendVerificationEmail(UserModel user, String siteURL)
+        @Value("${tsa.siteUrl}")
+        private String siteURL;
+
+        private void sendVerificationEmail(UserModel user)
                         throws MessagingException, UnsupportedEncodingException {
 
                 String toAddress = user.getEmail();
@@ -57,7 +64,7 @@ public class AuthenticationService {
                 helper.setSubject(subject);
 
                 content = content.replace("[[name]]", user.getUsername());
-                String verifyURL = "http://" + siteURL + "/api/v1/auth/verify?code=" + user.getVerificationToken();
+                String verifyURL = siteURL + "/api/v1/auth/verify?code=" + user.getVerificationToken();
 
                 content = content.replace("[[URL]]", verifyURL);
 
@@ -80,7 +87,7 @@ public class AuthenticationService {
 
         }
 
-        public AuthenticationResponse register(RegisterRequest request, String siteURL) {
+        public AuthenticationResponse register(RegisterRequest request) {
                 // verify that the username and email are unique
                 UserModel userByUsername = userRepository.findByUsername(request.getUsername()).orElse(null);
                 UserModel userByEmail = userRepository.findByEmail(request.getEmail()).orElse(null);
@@ -89,7 +96,6 @@ public class AuthenticationService {
                 if (userByEmail != null || userByUsername != null) {
                         return AuthenticationResponse.builder()
                                         .status(HttpStatus.CONFLICT)
-                                        .token(null)
                                         .build();
                 }
 
@@ -111,17 +117,15 @@ public class AuthenticationService {
 
                 // send verification email and handle exceptions
                 try {
-                        sendVerificationEmail(user, siteURL);
+                        sendVerificationEmail(user);
                 } catch (UnsupportedEncodingException | MessagingException e) {
                         System.out.println("Error while sending verification email.");
                         e.printStackTrace();
                 }
 
-                // generate and return token
-                String jwt = jwtService.generateToken(user);
+                // return ok
                 return AuthenticationResponse.builder()
                                 .status(HttpStatus.OK)
-                                .token(jwt)
                                 .build();
         }
 
@@ -137,25 +141,28 @@ public class AuthenticationService {
                         // account is locked / disabled => forbidden
                         return AuthenticationResponse.builder()
                                         .status(HttpStatus.FORBIDDEN)
-                                        .token(null)
                                         .build();
 
                 } catch (BadCredentialsException e) {
                         // bad credentials => unauthorized
                         return AuthenticationResponse.builder()
                                         .status(HttpStatus.UNAUTHORIZED)
-                                        .token(null)
                                         .build();
                 }
 
                 // find user in db
                 UserModel user = userRepository.findByUsername(request.getUsername()).orElseThrow();
 
-                // generate and return token
-                String jwt = jwtService.generateToken(user);
+                // generate and return tokens
+                String accessToken = jwtService.generateAccessToken(user);
+                RefreshTokenModel refreshToken = jwtService.createRefreshToken(user);
+
+                refreshTokenRepository.save(refreshToken);
+
                 return AuthenticationResponse.builder()
                                 .status(HttpStatus.OK)
-                                .token(jwt)
+                                .accessToken(accessToken)
+                                .refreshToken(refreshToken.getToken())
                                 .build();
         }
 

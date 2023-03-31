@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.backend.DTO.Auth.AuthenticationResponse;
 import com.example.backend.DTO.Auth.LoginRequest;
 import com.example.backend.DTO.Auth.RegisterRequest;
+import com.example.backend.DTO.Auth.TokenRefreshRequest;
 import com.example.backend.service.AuthenticationService;
+import com.example.backend.service.JwtService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,10 +23,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthenticationController {
     private final AuthenticationService authenticationService;
+    private final JwtService jwtService;
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
-        AuthenticationResponse registerResponse = authenticationService.register(request, "localhost:8080");
+        AuthenticationResponse registerResponse = authenticationService.register(request);
 
         return ResponseEntity.status(registerResponse.getStatus()).body(registerResponse);
     }
@@ -35,6 +38,14 @@ public class AuthenticationController {
         AuthenticationResponse loginResponse = authenticationService.login(request);
 
         return ResponseEntity.status(loginResponse.getStatus()).body(loginResponse);
+    }
+
+    @PostMapping("/refreshtoken")
+    public ResponseEntity<AuthenticationResponse> refreshToken(@RequestBody TokenRefreshRequest request) {
+        String token = request.getRefreshToken();
+        System.out.println(token);
+        AuthenticationResponse response = jwtService.refreshToken(token);
+        return ResponseEntity.status(response.getStatus()).body(response);
     }
 
     @GetMapping("/verify")
