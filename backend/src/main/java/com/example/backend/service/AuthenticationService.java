@@ -1,6 +1,11 @@
 package com.example.backend.service;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,6 +28,7 @@ import com.example.backend.model.UserModel;
 import com.example.backend.repository.RefreshTokenRepository;
 import com.example.backend.repository.UserRepository;
 
+import io.jsonwebtoken.Claims;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -152,6 +158,39 @@ public class AuthenticationService {
 
                 // find user in db
                 UserModel user = userRepository.findByUsername(request.getUsername()).orElseThrow();
+
+                // remove invalid tokens
+                List<RefreshTokenModel> userRefreshTokens = refreshTokenRepository.findAllByUser(user);
+                List<RefreshTokenModel> validRefreshTokens = new ArrayList<>();
+
+                for (int idx = 0; idx < userRefreshTokens.size(); idx++) {
+                        RefreshTokenModel currToken = userRefreshTokens.get(idx);
+                        if (jwtService.validateRefreshToken(currToken.getToken(), user)) {
+                                validRefreshTokens.add(currToken);
+                        } else {
+                                refreshTokenRepository.delete(currToken);
+                        }
+                }
+
+                // sort tokens by expriation date
+                Collections.sort(validRefreshTokens, new Comparator<RefreshTokenModel>() {
+                        public int compare(RefreshTokenModel token1, RefreshTokenModel token2) {
+                                Date expiration1 = jwtService.extractClaim(token1.getToken(),
+                                                jwtService.getRefreshSecret(), Claims::getExpiration);
+                                Date expiration2 = jwtService.extractClaim(token2.getToken(),
+                                                jwtService.getRefreshSecret(), Claims::getExpiration);
+                                return expiration2.compareTo(expiration1);
+                        }
+                });
+
+                // limit number of active tokens per user to 2
+                // by removing the oldest one if there are already 2
+                while (validRefreshTokens.size() >= 2) {
+                        int lastIdx = validRefreshTokens.size() - 1;
+
+                        refreshTokenRepository.delete(validRefreshTokens.get(lastIdx));
+                        validRefreshTokens.remove(lastIdx);
+                }
 
                 // generate and return tokens
                 String accessToken = jwtService.generateAccessToken(user);

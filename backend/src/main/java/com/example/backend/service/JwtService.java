@@ -65,7 +65,7 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
-    private boolean isTokenExpired(String token, String secret) {
+    public boolean isTokenExpired(String token, String secret) {
         return extractClaim(token, secret, Claims::getExpiration).before(new Date());
     }
 
