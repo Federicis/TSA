@@ -1,8 +1,8 @@
 package com.example.backend.DTO.Auth;
 
-import lombok.Getter;
+import lombok.Data;
 
-@Getter
+@Data
 public class TokenRefreshRequest {
     private String refreshToken;
 }
