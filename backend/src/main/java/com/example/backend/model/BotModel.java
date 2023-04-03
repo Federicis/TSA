@@ -1,15 +1,11 @@
 package com.example.backend.model;
 
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
 
 
 @Entity
@@ -17,6 +13,7 @@ import jakarta.persistence.Id;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(name = "bots")
 public class BotModel {
     @Id
     @GeneratedValue
