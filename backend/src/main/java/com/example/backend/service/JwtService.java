@@ -65,6 +65,10 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
+    public String extractUsernameFromAccessToken(String token) {
+        return extractClaim(token, JWT_SECRET, Claims::getSubject);
+    }
+
     public boolean isTokenExpired(String token, String secret) {
         return extractClaim(token, secret, Claims::getExpiration).before(new Date());
     }
