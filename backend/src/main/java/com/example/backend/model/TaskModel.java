@@ -1,34 +1,19 @@
 package com.example.backend.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-@Table(name = "tasks")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class TaskModel {
     @Id
-    @GeneratedValue
-    @Column(updatable = false, nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String type;
-    private String parameters;
-    private Long botId;
 
-    public List<String> getParametersList() {
-        return new ArrayList<String>(List.of(parameters.split(",")));
-    }
-
-    public void setParametersList(List<String> parametersList) {
-        parameters = String.join(",", parametersList);
-    }
+    //FIXME maybe find another way to ensure that the task list remains ordered.
+    @Column(name = "`index`")
+    private Long index;
+    @ManyToOne
+    private RoutineModel routine;
 }
