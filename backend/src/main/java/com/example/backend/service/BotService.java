@@ -1,5 +1,6 @@
 package com.example.backend.service;
 
+import com.example.backend.DTO.BotDTO;
 import com.example.backend.model.BotModel;
 import com.example.backend.model.TaskModel;
 import com.example.backend.repository.BotRepository;
@@ -15,12 +16,9 @@ import java.util.Objects;
 public class BotService {
 
     private final BotRepository botRepository;
-    private final TaskRepository taskRepository;
-
     @Autowired
     public BotService(BotRepository botRepository, TaskRepository taskRepository) {
         this.botRepository = botRepository;
-        this.taskRepository = taskRepository;
     }
 
     public List<BotModel> getBots() {
@@ -39,8 +37,14 @@ public class BotService {
         ));
     }
 
-    public void addNewBot(BotModel bot) {
-        botRepository.save(bot);
+    public void addNewBot(BotDTO bot) {
+        BotModel newBot = BotModel.builder()
+                .name(bot.getName())
+                .description(bot.getDescription())
+                .userId(bot.getUserId())
+                .redditUsername(bot.getRedditUsername())
+                .build();
+        botRepository.save(newBot);
     }
 
     public void deleteBot(Long id) {
@@ -50,7 +54,8 @@ public class BotService {
     }
 
     @Transactional
-    public void updateBot(Long id, BotModel newBot){
+    public void updateBot(BotModel newBot){
+        Long id = newBot.getId();
         BotModel oldBot = botRepository.findById(id)
                 .orElseThrow(() -> new IllegalStateException(
                         "bot with id " + id + " does not exist"
@@ -60,44 +65,6 @@ public class BotService {
             oldBot.setName(newBot.getName());
         oldBot.setDescription(newBot.getDescription());
 
-    }
-
-    public List<TaskModel> getTasks(Long id) {
-        if (botRepository.existsById(id)) {
-            return taskRepository.findTasksByBotId(id).orElse(List.of());
-        } else throw new IllegalStateException("bot with id " + id + " does not exist");
-    }
-
-    public void addTask(Long id, TaskModel task) {
-        if (botRepository.existsById(id)) {
-            task.setBotId(id);
-            taskRepository.save(task);
-        } else throw new IllegalStateException("bot with id " + id + " does not exist");
-    }
-
-    public void deleteTask(Long id, Long taskId) {
-        if (botRepository.existsById(id)) {
-            TaskModel task = taskRepository.findById(taskId).orElseThrow(() -> new IllegalStateException(
-                    "task with id " + taskId + " does not exist"
-            ));
-            if (Objects.equals(task.getBotId(), id)) {
-                taskRepository.deleteById(taskId);
-            } else throw new IllegalStateException("task with id " + taskId + " doesn't belong to bot with id " + id);
-        } else throw new IllegalStateException("bot with id " + id + " does not exist");
-    }
-
-    @Transactional
-    public void updateTask(Long id, TaskModel newTask) {
-        Long taskId = newTask.getId();
-        if (botRepository.existsById(id)) {
-            TaskModel oldTask = taskRepository.findById(taskId).orElseThrow(() -> new IllegalStateException(
-                    "task with id " + taskId + " does not exist"
-            ));
-            if (Objects.equals(oldTask.getBotId(), id)) {
-                oldTask.setType(newTask.getType());
-                oldTask.setParameters(newTask.getParameters());
-            } else throw new IllegalStateException("task with id " + taskId + " doesn't belong to bot with id " + id);
-        } else throw new IllegalStateException("bot with id " + id + " does not exist");
     }
 
 }

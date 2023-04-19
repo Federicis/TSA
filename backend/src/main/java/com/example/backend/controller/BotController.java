@@ -1,5 +1,6 @@
 package com.example.backend.controller;
 
+import com.example.backend.DTO.BotDTO;
 import com.example.backend.model.BotModel;
 import com.example.backend.model.TaskModel;
 import com.example.backend.service.BotService;
@@ -30,35 +31,16 @@ public class BotController {
 //        return botService.getBotByName(name);
 //    }
     @PostMapping
-    public void addNewBot(@RequestBody BotModel bot) {
+    public void addNewBot(@RequestBody BotDTO bot) {
         botService.addNewBot(bot);
     }
     @DeleteMapping(path = "{botId}")
     public void deleteBot(@PathVariable("botId") Long id) {
         botService.deleteBot(id);
     }
-    @PutMapping(path = "{botId}")
-    public void updateBot(@PathVariable("botId") Long id, @RequestBody BotModel newBot){
-        botService.updateBot(id, newBot);
+    @PutMapping
+    public void updateBot(@RequestBody BotModel newBot){
+        botService.updateBot(newBot);
     }
 
-    @GetMapping(path="{botId}/tasks")
-    public List<TaskModel> getTasks(@PathVariable("botId") Long id){
-        return botService.getTasks(id);
-    }
-
-    @PostMapping(path="{botId}/tasks")
-    public void addTask(@PathVariable("botId") Long id, @RequestBody TaskModel task){
-        botService.addTask(id, task);
-    }
-
-    @DeleteMapping(path="{botId}/{taskId}")
-    public void deleteTask(@PathVariable("botId") Long botId, @PathVariable("taskId") Long taskId){
-        botService.deleteTask(botId, taskId);
-    }
-
-    @PutMapping(path="{botId}/tasks")
-    public void updateTask(@PathVariable("botId") Long botId,  @RequestBody TaskModel newTask){
-        botService.updateTask(botId, newTask);
-    }
 }

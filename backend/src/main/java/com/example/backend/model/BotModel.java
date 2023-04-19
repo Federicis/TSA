@@ -23,6 +23,5 @@ public class BotModel {
     private String name;
     private String description;
     private Long userId;
-    private String userName;
     private String redditUsername;
 }
