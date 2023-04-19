@@ -23,7 +23,9 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -56,6 +58,18 @@ public class JwtService {
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
+    }
+
+    String getAccessTokenFromRequest(@NonNull HttpServletRequest request) {
+        final String authHeader = request.getHeader("Authorization");
+
+        // authentication header should be of the form "Bearer {accessToken}"
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return null;
+        }
+
+        // the rest of the string after the "Bearer" keyword
+        return authHeader.substring(7);
     }
 
     // extracts single claim from token
