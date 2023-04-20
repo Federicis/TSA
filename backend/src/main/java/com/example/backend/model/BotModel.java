@@ -22,6 +22,6 @@ public class BotModel {
     @Column(nullable = false)
     private String name;
     private String description;
-    private Long userId;
+    private String username;
     private String redditUsername;
 }

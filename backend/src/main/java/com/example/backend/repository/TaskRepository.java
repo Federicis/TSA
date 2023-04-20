@@ -11,6 +11,5 @@ import java.util.Optional;
 
 @Repository
 public interface TaskRepository  extends JpaRepository<TaskModel, Long> {
-    @Query("SELECT t FROM TaskModel t WHERE t.botId = ?1")
-    Optional<List<TaskModel>> findTasksByBotId(Long botId);
+    Optional<List<TaskModel>> findByBotId(Long botId);
 }

@@ -114,34 +114,29 @@ public class AuthenticationService {
                                 .email(request.getEmail())
                                 .password(passwordEncoder.encode(request.getPassword()))
                                 .role("USER")
-                                .enabled(true) // ONLY FOR TESTING
+                                .enabled(false)
                                 .verificationToken(randomToken)
                                 .build();
-                userRepository.save(user);
 
+                // send verification email and handle exceptions
+                try {
+                        sendVerificationEmail(user);
 
-            // send verification email and handle exceptions
-//                try {
-//                        sendVerificationEmail(user);
-//
-//                        // save in db
-//                        userRepository.save(user);
-//
-//                        // return ok
-//                        return AuthenticationResponse.builder()
-//                                        .status(HttpStatus.OK)
-//                                        .build();
-//                } catch (UnsupportedEncodingException | MessagingException e) {
-//                        System.out.println("Error while sending verification email.");
-//                        e.printStackTrace();
-//
-//                        return AuthenticationResponse.builder()
-//                                        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                                        .build();
-//                }
-            return AuthenticationResponse.builder()
+                        // save in db
+                        userRepository.save(user);
+
+                        // return ok
+                        return AuthenticationResponse.builder()
                                         .status(HttpStatus.OK)
                                         .build();
+                } catch (UnsupportedEncodingException | MessagingException e) {
+                        System.out.println("Error while sending verification email.");
+                        e.printStackTrace();
+
+                        return AuthenticationResponse.builder()
+                                        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                        .build();
+                }
         }
 
         public AuthenticationResponse login(LoginRequest request) {
