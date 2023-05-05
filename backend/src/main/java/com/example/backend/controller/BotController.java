@@ -2,7 +2,6 @@ package com.example.backend.controller;
 
 import com.example.backend.DTO.BotDTO;
 import com.example.backend.model.BotModel;
-import com.example.backend.model.TaskModel;
 import com.example.backend.service.BotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
