@@ -78,7 +78,14 @@ public class JwtService {
     }
 
     public String getUsernameFromRequest(HttpServletRequest request) {
+
         String authHeader = request.getHeader("Authorization");
+
+        // authentication header should be of the form "Bearer {accessToken}"
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return null;
+        }
+
         String token = authHeader.substring(7);
 
         return extractUsernameFromAccessToken(token);
