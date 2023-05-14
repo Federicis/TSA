@@ -77,13 +77,28 @@ public class JwtService {
         return extractClaim(token, JWT_SECRET, Claims::getSubject);
     }
 
-    public String getAccesToken(){
-        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+    public String getUsernameFromRequest(HttpServletRequest request) {
+
+        String authHeader = request.getHeader("Authorization");
+
+        // authentication header should be of the form "Bearer {accessToken}"
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return null;
+        }
+
+        String token = authHeader.substring(7);
+
+        return extractUsernameFromAccessToken(token);
+    }
+
+    public String getAccesToken() {
+        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder
+                .getRequestAttributes();
         String authorizationHeader = requestAttributes.getRequest().getHeader("Authorization");
         return authorizationHeader.substring(7);
     }
 
-    public String getCurrentUserUsername(){
+    public String getCurrentUserUsername() {
         return extractUsernameFromAccessToken(getAccesToken());
     }
 
