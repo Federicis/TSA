@@ -1,5 +1,6 @@
 package com.example.backend.model.task;
 
+import com.example.backend.DTO.TaskType;
 import com.example.backend.model.RoutineModel;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -8,11 +9,15 @@ import lombok.Data;
 @Data
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "type")
-public class TaskModel {
+public abstract class TaskModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "routine_id")
     private RoutineModel routine;
+
+    @Transient
+    public abstract TaskType getTaskType();
 }

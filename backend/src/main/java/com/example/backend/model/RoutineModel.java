@@ -1,5 +1,6 @@
 package com.example.backend.model;
 
+import com.example.backend.model.enumeration.Interval;
 import com.example.backend.model.task.TaskModel;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -13,7 +14,11 @@ public class RoutineModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany
+    @ManyToOne
+    @JoinColumn(name = "bot_id")
+    private BotModel bot;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderColumn(name="task_index")
     private List<TaskModel> tasks;
 
@@ -22,5 +27,6 @@ public class RoutineModel {
 
     @Column(name = "`interval`")
     private Interval interval;
+
 
 }

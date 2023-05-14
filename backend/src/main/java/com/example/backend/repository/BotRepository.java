@@ -13,5 +13,5 @@ public interface BotRepository extends JpaRepository<BotModel, Long> {
 
     Optional<BotModel> findBotByName(String name);
 
-    Optional<List<BotModel>> findByUsername(String username);
+    Optional<List<BotModel>> findByUserUsername(String username);
 }

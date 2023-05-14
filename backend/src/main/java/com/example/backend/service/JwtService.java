@@ -6,15 +6,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import io.jsonwebtoken.Jwt;
-import jakarta.servlet.http.HttpServletRequest;
+import com.example.backend.model.enumeration.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Service;
 
 import com.example.backend.DTO.Auth.AuthenticationResponse;
@@ -28,9 +24,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -168,5 +162,12 @@ public class JwtService {
                 .refreshToken(tokenModel.getToken())
                 .accessToken(newAccessToken)
                 .build();
+    }
+
+    public boolean isAdmin(){
+        UserModel user = userRepository.findByUsername(getCurrentUserUsername()).orElseThrow(
+                ()-> new IllegalStateException("User not found")
+        );
+        return user.getRole().equals(Role.ADMIN);
     }
 }
