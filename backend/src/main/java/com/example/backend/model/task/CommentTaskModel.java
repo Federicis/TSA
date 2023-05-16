@@ -1,13 +1,12 @@
 package com.example.backend.model.task;
 
-import com.example.backend.DTO.TaskType;
+import com.example.backend.model.enumeration.TaskType;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.bytebuddy.implementation.bind.annotation.IgnoreForBinding;
 
 @Entity
 @Data

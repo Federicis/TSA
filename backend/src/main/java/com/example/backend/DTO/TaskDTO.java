@@ -1,5 +1,6 @@
 package com.example.backend.DTO;
 
+import com.example.backend.model.enumeration.TaskType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
