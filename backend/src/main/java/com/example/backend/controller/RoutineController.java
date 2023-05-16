@@ -3,12 +3,8 @@ package com.example.backend.controller;
 import com.example.backend.DTO.RoutineDTO;
 import com.example.backend.Util.Mapper.RoutineMapper;
 import com.example.backend.model.RoutineModel;
-import com.example.backend.model.task.TaskModel;
 import com.example.backend.service.RoutineService;
-import com.example.backend.service.TaskService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
