@@ -1,23 +1,21 @@
 package com.example.backend.controller;
 
 import com.example.backend.DTO.BotDTO;
+import com.example.backend.Util.Mapper.BotMapper;
 import com.example.backend.model.BotModel;
-import com.example.backend.model.TaskModel;
 import com.example.backend.service.BotService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.List; 
 
 @RestController
-@RequestMapping(path = "api/v1/bot")
+@RequiredArgsConstructor
+@RequestMapping(path = "api/v1/bots")
 public class BotController {
     private final BotService botService;
-    @Autowired
-    public BotController(BotService botService) {
-        this.botService = botService;
-    }
-
+    private final BotMapper botMapper;
     @GetMapping
     public List<BotModel> getBots() {
         return botService.getBots();
@@ -31,16 +29,18 @@ public class BotController {
 //        return botService.getBotByName(name);
 //    }
     @PostMapping
-    public void addNewBot(@RequestBody BotDTO bot) {
-        botService.addNewBot(bot);
+    public BotDTO addNewBot(@RequestBody BotDTO botDTO) {
+        BotModel bot = botMapper.toModel(botDTO);
+        return botMapper.toDTO(botService.addNewBot(bot));
     }
     @DeleteMapping(path = "{botId}")
     public void deleteBot(@PathVariable("botId") Long id) {
         botService.deleteBot(id);
     }
     @PutMapping
-    public void updateBot(@RequestBody BotModel newBot){
-        botService.updateBot(newBot);
+    public void updateBot(@RequestBody BotDTO newBot){
+        BotModel bot = botMapper.toModel(newBot);
+        botService.updateBot(bot);
     }
 
 }

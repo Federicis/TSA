@@ -18,7 +18,7 @@
     <properties>
 	<java.version>17</java.version>
         <maven.compiler.plugin.version>3.10.1</maven.compiler.plugin.version>
-        <org.mapstruct.version>1.4.1.Final</org.mapstruct.version>
+        <org.mapstruct.version>1.5.0.Final</org.mapstruct.version>
     </properties>
     <dependencies>
 
@@ -172,8 +172,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.compiler.plugin.version}</version>
                 <configuration>
-                    <source>11</source>
-                    <target>11</target>
+                    <source>17</source>
+                    <target>17</target>
                 </configuration>
             </plugin>
         </plugins>

@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+import com.example.backend.model.enumeration.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -113,7 +114,7 @@ public class AuthenticationService {
                                 .username(request.getUsername())
                                 .email(request.getEmail())
                                 .password(passwordEncoder.encode(request.getPassword()))
-                                .role("USER")
+                                .role(Role.USER)
                                 .enabled(false)
                                 .verificationToken(randomToken)
                                 .build();
