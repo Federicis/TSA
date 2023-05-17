@@ -2,11 +2,13 @@ package com.example.backend.controller;
 
 import java.net.http.HttpHeaders;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,8 +24,6 @@ import com.example.backend.DTO.Auth.TokenRefreshRequest;
 import com.example.backend.service.AuthenticationService;
 import com.example.backend.service.JwtService;
 
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -33,6 +33,8 @@ import lombok.RequiredArgsConstructor;
 public class AuthenticationController {
     private final AuthenticationService authenticationService;
     private final JwtService jwtService;
+
+    private static final String clientURL = "${tsa.clientUrl}";
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
@@ -51,6 +53,8 @@ public class AuthenticationController {
 
             ResponseCookie cookie = ResponseCookie.from("refreshToken", authResponse.getRefreshToken())
                     .httpOnly(true)
+                    .secure(true)
+                    .sameSite("none")
                     .build();
 
             return ResponseEntity.status(HttpStatus.OK)
@@ -62,14 +66,18 @@ public class AuthenticationController {
         return ResponseEntity.status(authResponse.getStatus()).body(null);
     }
 
+    @CrossOrigin(allowCredentials = "true", origins = clientURL)
     @PostMapping("/refreshtoken")
-    public ResponseEntity<TokenResponse> refreshToken(@RequestBody TokenRefreshRequest request) {
-        String token = request.getRefreshToken();
+    public ResponseEntity<TokenResponse> refreshToken(@CookieValue("refreshToken") String token,
+            @RequestBody TokenRefreshRequest request) {
+        System.out.println("token");
         AuthenticationResponse authResponse = jwtService.refreshToken(token);
 
         TokenResponse tokenResponse = new TokenResponse(authResponse.getAccessToken());
         ResponseCookie cookie = ResponseCookie.from("refreshToken", authResponse.getRefreshToken())
                 .httpOnly(true)
+                .secure(true)
+                .sameSite("none")
                 .build();
 
         return ResponseEntity.status(authResponse.getStatus())
