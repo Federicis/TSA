@@ -8,6 +8,20 @@
   margin-top: 10vh;
 }
 
+.error-div {
+  color: red;
+  font-size: 16px;
+  height: 16px;
+  margin: 0;
+}
+
+.success-div {
+  font-size: 16px;
+  width: 70vw;
+  text-align: center;
+  color: green;
+}
+
 .sign-up-heading {
   font-size: 38px;
   font-weight: normal;

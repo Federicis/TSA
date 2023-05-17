@@ -1,6 +1,9 @@
 import "./App.css";
 
 import Main from "./components/Main";
+import PersistLogin from "./components/PersistLogin";
+import RequireAuth from "./components/RequireAuth";
+import { AuthProvider } from "./context/AuthProvider";
 import LoginPage from "./pages/Login/Login";
 import SignUpPage from "./pages/SignUp/SignUp";
 
@@ -9,13 +12,17 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 function App() {
 	return (
 		<BrowserRouter>
-			<Routes>
-				<Route path="/">
-					<Route index element={<Main prop1={"abcd"} prop2={"efgh"} />} />
-					<Route path="login" element={<LoginPage />} />
-					<Route path="sign-up" element={<SignUpPage />} />
-				</Route>
-			</Routes>
+			<AuthProvider>
+				<Routes>
+					<Route path="/" element={<PersistLogin />}>
+						<Route element={<RequireAuth />}>
+							<Route index element={<Main prop1={"abcd"} prop2={"efgh"} />} />
+						</Route>
+						<Route path="login" element={<LoginPage />} />
+						<Route path="sign-up" element={<SignUpPage />} />
+					</Route>
+				</Routes>
+			</AuthProvider>
 		</BrowserRouter>
 	);
 }

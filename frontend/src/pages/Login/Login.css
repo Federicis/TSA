@@ -8,6 +8,13 @@
   margin-top: 10vh;
 }
 
+.error-div {
+  color: red;
+  font-size: 16px;
+  height: 16px;
+  margin: 0;
+}
+
 .login-heading {
   font-size: 40px;
   font-weight: normal;
