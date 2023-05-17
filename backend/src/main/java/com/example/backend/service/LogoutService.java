@@ -5,9 +5,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.stereotype.Service;
 
-import com.example.backend.model.UserModel;
 import com.example.backend.repository.RefreshTokenRepository;
-import com.example.backend.repository.UserRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -27,6 +25,7 @@ public class LogoutService implements LogoutHandler {
             Authentication authentication) {
 
         String username = jwtService.getUsernameFromRequest(request);
+        System.out.println(username);
 
         refreshTokenRepository.deleteAllByUsername(username);
         SecurityContextHolder.clearContext();
