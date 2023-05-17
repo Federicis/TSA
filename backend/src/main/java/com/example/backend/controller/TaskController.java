@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping(path = "api/v1/task")
 public class TaskController {
     private final TaskService taskService;
@@ -37,6 +38,5 @@ public class TaskController {
     public void updateTask(@RequestBody TaskModel newTask) {
         taskService.updateTask(newTask);
     }
-
 
 }
