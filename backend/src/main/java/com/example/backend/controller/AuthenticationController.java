@@ -1,7 +1,11 @@
 package com.example.backend.controller;
 
+import java.net.http.HttpHeaders;
+
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,11 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend.DTO.Auth.AuthenticationResponse;
 import com.example.backend.DTO.Auth.LoginRequest;
+import com.example.backend.DTO.Auth.TokenResponse;
 import com.example.backend.DTO.Auth.RegisterRequest;
 import com.example.backend.DTO.Auth.TokenRefreshRequest;
 import com.example.backend.service.AuthenticationService;
 import com.example.backend.service.JwtService;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -28,26 +35,46 @@ public class AuthenticationController {
     private final JwtService jwtService;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
         AuthenticationResponse registerResponse = authenticationService.register(request);
 
-        return ResponseEntity.status(registerResponse.getStatus()).body(registerResponse);
+        return ResponseEntity.status(registerResponse.getStatus()).body(null);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<TokenResponse> login(@RequestBody LoginRequest request) {
 
-        AuthenticationResponse loginResponse = authenticationService.login(request);
+        AuthenticationResponse authResponse = authenticationService.login(request);
 
-        return ResponseEntity.status(loginResponse.getStatus()).body(loginResponse);
+        if (authResponse.getStatus() == HttpStatus.OK) {
+            TokenResponse loginResponse = new TokenResponse(authResponse.getAccessToken());
+
+            ResponseCookie cookie = ResponseCookie.from("refreshToken", authResponse.getRefreshToken())
+                    .httpOnly(true)
+                    .build();
+
+            return ResponseEntity.status(HttpStatus.OK)
+                    .header("Set-Cookie", cookie.toString())
+                    .body(loginResponse);
+
+        }
+
+        return ResponseEntity.status(authResponse.getStatus()).body(null);
     }
 
     @PostMapping("/refreshtoken")
-    public ResponseEntity<AuthenticationResponse> refreshToken(@RequestBody TokenRefreshRequest request) {
+    public ResponseEntity<TokenResponse> refreshToken(@RequestBody TokenRefreshRequest request) {
         String token = request.getRefreshToken();
-        System.out.println(token);
-        AuthenticationResponse response = jwtService.refreshToken(token);
-        return ResponseEntity.status(response.getStatus()).body(response);
+        AuthenticationResponse authResponse = jwtService.refreshToken(token);
+
+        TokenResponse tokenResponse = new TokenResponse(authResponse.getAccessToken());
+        ResponseCookie cookie = ResponseCookie.from("refreshToken", authResponse.getRefreshToken())
+                .httpOnly(true)
+                .build();
+
+        return ResponseEntity.status(authResponse.getStatus())
+                .header("Set-Cookie", cookie.toString())
+                .body(tokenResponse);
     }
 
     @GetMapping("/verify")
