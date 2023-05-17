@@ -1,25 +1,26 @@
-.login-main {
-	display: flex;
-	align-items: center;
-	justify-content: space-around;
-	flex-direction: column;
-	width: 100vw;
+.sign-up-main {
 	height: 80vh;
-	margin-top: 10vh;
-}
-
-.login-heading {
-	font-size: 40px;
-	font-weight: normal;
-	margin-top: 0;
-}
-
-.login-form {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
-	gap: 30px;
+	width: 100vw;
+	margin-top: 10vh;
+}
+
+.sign-up-heading {
+	font-size: 38px;
+	font-weight: normal;
+	margin-top: 0;
+	margin-bottom: 70px;
+}
+
+.sign-up-form {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	gap: 25px;
 
 	input {
 		width: 360px;
@@ -33,7 +34,7 @@
 
 	.submit-input {
 		box-shadow: none;
-		width: 400px;
+		width: 300px;
 		font-size: 18px;
 		font-weight: bold;
 		border-radius: 16px;
@@ -49,31 +50,24 @@
 	}
 }
 
-.sign-up-div {
+.login-div {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 
-	.sign-up-text {
+	.login-text {
 		font-size: 18px;
 	}
-	.sign-up-link button {
-		font-size: 18px;
-		font-weight: bold;
-		padding: 10px 70px;
-		margin-top: 10px;
-		border-radius: 10px;
-		border: none;
-		background-color: var(--button-black);
-		color: var(--text-white);
-	}
-	.sign-up-link button:hover {
-		cursor: pointer;
+
+	.login-link {
+		color: var(--text-black);
+		font-weight: 500;
 	}
 }
 
-.password-input-div {
+.password-input-div,
+.confirm-password-input-div {
 	position: relative;
 }
 
@@ -94,23 +88,23 @@
 }
 
 @media screen and (max-width: 600px) {
-	.login-main {
+	.sign-up-main {
 		height: 60vh;
 		margin-top: 20vh;
 	}
-	.login-heading {
-		font-size: 36px;
+	.sign-up-heading {
+		font-size: 34px;
 	}
-	.login-form input {
+	.sign-up-form input {
 		width: 70vw;
 	}
-	.login-form .submit-input {
+	.sign-up-form .submit-input {
 		width: 75vw;
 	}
-	.sign-up-div .sign-up-text {
+	.login-div .login-text {
 		font-size: 16px;
 	}
-	.sign-up-div .sign-up-link button {
+	.login-div .login-link button {
 		font-size: 16px;
 	}
 }

@@ -9,3 +9,7 @@
 	--text-black: #000;
 	--text-white: #fff;
 }
+
+.app {
+	background-color: var(--bg-white);
+}

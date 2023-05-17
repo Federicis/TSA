@@ -16,6 +16,7 @@ export default function Login() {
 					name="username"
 					className="username-input"
 					placeholder="Username"
+					required
 				/>
 				<div className="password-input-div">
 					<input
@@ -23,6 +24,7 @@ export default function Login() {
 						name="password"
 						className="password-input"
 						placeholder="Password"
+						required
 					/>
 					<FontAwesomeIcon
 						onClick={() => setPasswordVisible(!passwordVisible)}
