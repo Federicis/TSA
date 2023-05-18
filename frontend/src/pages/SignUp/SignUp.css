@@ -1,0 +1,119 @@
+.sign-up-main {
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100vw;
+  margin-top: 10vh;
+}
+
+.error-div {
+  color: red;
+  font-size: 16px;
+  height: 16px;
+  margin: 0;
+}
+
+.success-div {
+  font-size: 16px;
+  width: 70vw;
+  text-align: center;
+  color: green;
+}
+
+.sign-up-heading {
+  font-size: 38px;
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 70px;
+}
+
+.sign-up-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 25px;
+}
+.sign-up-form input {
+  width: 360px;
+  padding: 14px 20px;
+  font-size: 15px;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.1);
+  background-color: var(--text-white);
+}
+.sign-up-form .submit-input {
+  box-shadow: none;
+  width: 300px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 16px;
+  padding: 10px 20px;
+  margin: 25px 0;
+  margin-bottom: 0;
+  color: var(--text-white);
+  background: linear-gradient(to right, var(--red), var(--orange));
+}
+.sign-up-form .submit-input:hover {
+  cursor: pointer;
+}
+
+.login-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.login-div .login-text {
+  font-size: 18px;
+}
+.login-div .login-link {
+  color: var(--text-black);
+  font-weight: 500;
+}
+
+.password-input-div,
+.confirm-password-input-div {
+  position: relative;
+}
+
+.eye-icon {
+  position: absolute;
+  left: calc(100% - 20px - 15px);
+  top: 15px;
+  color: #666;
+}
+
+.eye-icon:hover {
+  cursor: pointer;
+  color: #333;
+}
+
+.eye-icon:active {
+  color: black;
+}
+
+@media screen and (max-width: 600px) {
+  .sign-up-main {
+    height: 60vh;
+    margin-top: 20vh;
+  }
+  .sign-up-heading {
+    font-size: 34px;
+  }
+  .sign-up-form input {
+    width: 70vw;
+  }
+  .sign-up-form .submit-input {
+    width: 75vw;
+  }
+  .login-div .login-text {
+    font-size: 16px;
+  }
+  .login-div .login-link button {
+    font-size: 16px;
+  }
+}/*# sourceMappingURL=SignUp.css.map */

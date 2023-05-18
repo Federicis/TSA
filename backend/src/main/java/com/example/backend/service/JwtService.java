@@ -24,6 +24,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -179,10 +180,9 @@ public class JwtService {
                 .build();
     }
 
-    public boolean isAdmin(){
+    public boolean isAdmin() {
         UserModel user = userRepository.findByUsername(getCurrentUserUsername()).orElseThrow(
-                ()-> new IllegalStateException("User not found")
-        );
+                () -> new IllegalStateException("User not found"));
         return user.getRole().equals(Role.ADMIN);
     }
 }

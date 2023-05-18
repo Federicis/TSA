@@ -1,0 +1,15 @@
+:root {
+	--red: #ed001c;
+	--orange: #ff8b60;
+	--button-black: #111;
+	--card-black: #343434;
+	--bg-black: #222;
+	--bg-white: #fff;
+	--card-white: #f4f4f4;
+	--text-black: #000;
+	--text-white: #fff;
+}
+
+.app {
+	background-color: var(--bg-white);
+}
