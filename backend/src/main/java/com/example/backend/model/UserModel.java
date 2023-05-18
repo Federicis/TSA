@@ -1,5 +1,7 @@
 package com.example.backend.model;
 
+import com.example.backend.model.enumeration.Role;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -7,13 +9,6 @@ import lombok.NoArgsConstructor;
 
 import java.util.Collection;
 import java.util.List;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Column;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -32,7 +27,10 @@ public class UserModel implements UserDetails {
     private String email;
     private String username;
     private String password;
-    private String role;
+    @OneToMany(mappedBy = "user")
+    private List<BotModel> bots;
+    @Enumerated(EnumType.STRING)
+    private Role role;
     private boolean enabled;
 
     @Column(length = 64)
@@ -41,7 +39,7 @@ public class UserModel implements UserDetails {
     // returns a list of the user's roles
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role));
+        return List.of(new SimpleGrantedAuthority(role.toString()));
     }
 
     @Override
