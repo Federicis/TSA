@@ -25,7 +25,6 @@ public class LogoutService implements LogoutHandler {
             Authentication authentication) {
 
         String username = jwtService.getUsernameFromRequest(request);
-        System.out.println(username);
 
         refreshTokenRepository.deleteAllByUsername(username);
         SecurityContextHolder.clearContext();
