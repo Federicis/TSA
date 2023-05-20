@@ -22,24 +22,6 @@ public class BotRunnerApplication {
         ApplicationContext applicationContext = SpringApplication.run(BotRunnerApplication.class, args);
         Executor executor = applicationContext.getBean(Executor.class);
         executor.execute();
-//        String rootPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
-//        String botConfigPath = rootPath + "botAccount.properties";
-//        Properties botProp = ConfigLoader.getInstance().getBotProp();
-//        System.out.println("username: " + botProp.getProperty("username"));
-//        System.out.println("password: " + botProp.getProperty("password"));
-//        System.out.println("client_id: " + botProp.getProperty("client_id"));
-//        System.out.println("client_secret: " + botProp.getProperty("client_secret"));
-//
-//        RedditClientConfig redditClientConfig = new ScriptClientConfig(
-//                new PersonalUseScript(botProp.getProperty("client_id"), botProp.getProperty("client_secret")),
-//                new UserAgent("TSAA", "1.0", "tsaaaaaaaa"),
-//                new Credentials(botProp.getProperty("username"), botProp.getProperty("password"))
-//        );
-//        RedditUserClient redditUserClient = new RedditUserClient(redditClientConfig);
-//        var subredditPaginator = redditUserClient.subreddit("tsaa").posts().sorting(SubredditSort.New).limit(100).build();
-//        for (var post : subredditPaginator.next()) {
-//            System.out.println(post.getTitle());
-//        }
     }
 
 }
