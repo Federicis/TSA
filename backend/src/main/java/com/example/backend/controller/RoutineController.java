@@ -27,8 +27,6 @@ public class RoutineController {
     public RoutineDTO addTask(@RequestBody RoutineDTO routineDTO) {
         RoutineModel routine = routineMapper.toRoutineModel(routineDTO);
         return routineMapper.toRoutineDTO(routineService.AddNewRoutine(routine));
-
-
     }
 
     @DeleteMapping(path = "{routineId}")

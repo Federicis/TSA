@@ -42,8 +42,6 @@ public class BotService {
 
     public BotModel addNewBot(BotModel bot) {
         String username = jwtService.getCurrentUserUsername();
-        if(! Objects.equals(bot.getUser().getUsername(), jwtService.getCurrentUserUsername()) && !jwtService.isAdmin())
-            throw new IllegalStateException("this bot does not belong to the user");
         UserModel user = userRepository.findByUsername(username).orElseThrow(
                 () -> new IllegalStateException("user with username " + username + " does not exist")
         );

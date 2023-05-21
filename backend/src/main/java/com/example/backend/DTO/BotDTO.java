@@ -14,7 +14,6 @@ public class BotDTO {
     private Long id;
     private String name;
     private String description;
-    private String username;
     private String redditUsername;
     private String password;
     private String clientId;
