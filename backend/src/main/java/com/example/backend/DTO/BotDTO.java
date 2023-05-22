@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class BotDTO {
     private Long id;
+    private Long userId;
     private String name;
     private String description;
     private String redditUsername;

@@ -7,6 +7,8 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface BotMapper {
+    @Mapping(target = "user.id", source = "userId")
     BotDTO toDTO(BotModel bot);
+    @Mapping(target = "userId", source = "user.id")
     BotModel toModel(BotDTO bot);
 }
