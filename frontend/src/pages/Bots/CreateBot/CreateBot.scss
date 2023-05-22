@@ -1,0 +1,74 @@
+.create-bot-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
+  width: 100vw;
+  // height: 80vh;
+  margin-top: 10vh;
+  margin-bottom: 10vh;
+}
+
+.error-div {
+  color: red;
+  font-size: 16px;
+  height: 16px;
+  margin: 0;
+}
+
+.create-bot-heading {
+  font-size: 40px;
+  font-weight: normal;
+  margin-top: 0;
+}
+
+.create-bot-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 30px;
+
+  input {
+    width: 360px;
+    padding: 14px 20px;
+    font-size: 15px;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.1);
+    background-color: var(--text-white);
+  }
+
+  .submit-input {
+    box-shadow: none;
+    width: 400px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 16px;
+    padding: 10px 20px;
+    margin: 25px 0;
+    margin-bottom: 0;
+    color: var(--text-white);
+    background: linear-gradient(to right, var(--red), var(--orange));
+  }
+
+  .submit-input:hover {
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .create-bot-main {
+    height: 60vh;
+    margin-top: 20vh;
+  }
+  .create-bot-heading {
+    font-size: 36px;
+  }
+  .create-bot-form input {
+    width: 70vw;
+  }
+  .create-bot-form .submit-input {
+    width: 75vw;
+  }
+}
