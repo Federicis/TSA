@@ -18,10 +18,10 @@ function App() {
 					<Route path="/" element={<PersistLogin />}>
 						<Route element={<RequireAuth />}>
 							<Route index element={<Main prop1={"abcd"} prop2={"efgh"} />} />
+							<Route path="create-bot" element={<CreateBot />} />
 						</Route>
 						<Route path="login" element={<LoginPage />} />
 						<Route path="sign-up" element={<SignUpPage />} />
-						<Route path="create-bot" element={<CreateBot />} />
 					</Route>
 				</Routes>
 			</AuthProvider>
