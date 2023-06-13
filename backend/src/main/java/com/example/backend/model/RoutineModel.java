@@ -1,6 +1,7 @@
 package com.example.backend.model;
 
 import com.example.backend.model.enumeration.Interval;
+import com.example.backend.model.record.RoutineRecord;
 import com.example.backend.model.task.TaskModel;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -28,5 +29,7 @@ public class RoutineModel {
     @Column(name = "`interval`")
     private Interval interval;
 
+    @OneToMany
+    private List<RoutineRecord> records;
 
 }
