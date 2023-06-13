@@ -27,8 +27,7 @@ public class BotService {
     public List<BotModel> getBots() {
         String username = jwtService.getCurrentUserUsername();
         UserModel user = userRepository.findByUsername(username).orElseThrow(
-                () -> new IllegalStateException("user with username " + username + " does not exist")
-        );
+                () -> new IllegalStateException("user with username " + username + " does not exist"));
         return botRepository.findByUser(user).orElse(null);
     }
 
