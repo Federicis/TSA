@@ -1,6 +1,7 @@
 package com.example.backend.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,6 +26,7 @@ public class BotModel {
     private String description;
     @ManyToOne()
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private UserModel user;
     private String redditUsername;
     private String password;
