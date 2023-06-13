@@ -7,7 +7,7 @@ import AuthContext from "../../../context/AuthProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function MyBotsPage() {
 	const [bots, setBots] = useState([]);
@@ -22,7 +22,6 @@ export default function MyBotsPage() {
 				const response = await axiosPrivate.get(
 					`http://localhost:8080/api/v1/bots`
 				);
-				console.log(response.data);
 				setBots(response.data);
 			} catch (err) {
 				console.log(err);
@@ -30,6 +29,19 @@ export default function MyBotsPage() {
 		};
 		getBots();
 	}, []);
+
+	const handleDelete = async (e) => {
+		e.preventDefault();
+		try {
+			const response = await axiosPrivate.delete(
+				`http://localhost:8080/api/v1/bots/${bots[currIndex].id}`
+			);
+		} catch (err) {
+			console.log(err);
+		}
+		bots.splice(currIndex, 1);
+		setCurrIndex(0);
+	};
 
 	return (
 		<main className="my-bots">
@@ -44,9 +56,30 @@ export default function MyBotsPage() {
 					{[1, 2, 3, 4, 5].map((num) => (
 						<div className={`bot-card bot-card-${num}`} key={num}>
 							{num == 3 ? (
-								<h2 className="bot-name">
-									{bots[(currIndex + num - 1) % bots.length].name}
-								</h2>
+								<>
+									<h2 className="bot-name">{bots[currIndex].name}</h2>
+
+									<div className="bot-routines">
+										{bots[currIndex].routines.length ? (
+											<ul className="bot-routines-list">
+												{bots[currIndex].routines.map((routine) => (
+													<li className="routine-list-item">
+														<p className="routine-name">{routine.name}</p>
+													</li>
+												))}
+											</ul>
+										) : (
+											<p className="no-routines">No routines.</p>
+										)}
+									</div>
+									<button className="edit-bot-button">
+										<Link to="/edit-bot">Edit</Link>
+									</button>
+
+									<button className="delete-bot-button" onClick={handleDelete}>
+										Delete
+									</button>
+								</>
 							) : (
 								<></>
 							)}

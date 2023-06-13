@@ -25,14 +25,82 @@
   border-radius: 7px;
   box-shadow: 0px 3px 5px 1px rgba(0, 0, 0, 0.5);
   position: absolute;
+  display: grid;
+  grid-template-areas: "t t" "r r" "e d";
+  grid-template-rows: 1fr 3fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  padding: 10px;
+  box-sizing: border-box;
+  align-items: center;
+  justify-items: center;
+}
+.bot-card .bot-name {
+  margin: 0;
+  grid-area: t;
+  text-align: center;
+}
+.bot-card .edit-bot-button {
+  width: 100%;
+  height: 50%;
+  border: none;
+  color: white;
+  font-weight: bold;
+  border-radius: 7px;
+  background: linear-gradient(to right, var(--orange), var(--red));
+  grid-area: e;
+}
+.bot-card .edit-bot-button a {
+  text-decoration: none;
+  color: white;
+}
+.bot-card .delete-bot-button {
+  width: 100%;
+  height: 50%;
+  border: none;
+  color: white;
+  font-weight: bold;
+  border-radius: 7px;
+  background-color: var(--button-black);
+  grid-area: d;
+}
+.bot-card .bot-routines {
+  grid-area: r;
+  align-self: center;
+  justify-self: center;
+  height: 100%;
+  width: 100%;
+  overflow-y: scroll;
+}
+.bot-card .bot-routines-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.bot-card .routine-list-item {
+  text-decoration: none;
+  font-weight: bold;
+  height: 10%;
+  background-color: #ddd;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
+  padding: 10px;
+  border-radius: 5px;
+}
+.bot-card .routine-list-item p {
+  margin: 0;
+}
+.bot-card .no-routines {
+  text-align: center;
 }
 
 .bot-name {
   font-size: 24px;
+  align-self: end;
 }
 
 .prev-bot-button {
@@ -50,7 +118,8 @@
 }
 
 .next-bot-button:hover,
-.prev-bot-button:hover {
+.prev-bot-button:hover,
+button:hover {
   cursor: pointer;
 }
 
@@ -126,7 +195,7 @@
   }
   .bot-card-3 {
     width: 60vw;
-    height: 40vh;
+    height: 50vh;
   }
   .bot-card-1,
   .bot-card-2,
