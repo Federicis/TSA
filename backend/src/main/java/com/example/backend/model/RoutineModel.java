@@ -2,6 +2,7 @@ package com.example.backend.model;
 
 import com.example.backend.model.enumeration.Interval;
 import com.example.backend.model.task.TaskModel;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -18,6 +19,7 @@ public class RoutineModel {
 
     @ManyToOne
     @JoinColumn(name = "bot_id")
+    @JsonIgnore
     private BotModel bot;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
