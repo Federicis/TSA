@@ -1,1 +1,89 @@
-/*# sourceMappingURL=MyBots.css.map */
+.my-bots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.my-bots-heading {
+  position: relative;
+  top: -30vh;
+}
+
+.bots-carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  position: relative;
+  border: 1px solid black;
+}
+
+.bot-card {
+  background-color: var(--card-white);
+  border-radius: 7px;
+  box-shadow: 0px 3px 5px 1px rgba(0, 0, 0, 0.5);
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.bot-name {
+  font-size: 24px;
+}
+
+.prev-bot-button {
+  position: absolute;
+  left: -400px;
+  width: 32px;
+  height: 32px;
+}
+
+.next-bot-button {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  right: -400px;
+}
+
+.next-bot-button:hover,
+.prev-bot-button:hover {
+  cursor: pointer;
+}
+
+.bot-card-3 {
+  width: 300px;
+  height: 50vh;
+  z-index: 3;
+}
+
+.bot-card-1 {
+  right: 200px;
+  width: 150px;
+  height: 30vh;
+  z-index: 1;
+}
+
+.bot-card-2 {
+  right: 80px;
+  width: 200px;
+  height: 40vh;
+  z-index: 2;
+}
+
+.bot-card-4 {
+  left: 80px;
+  width: 200px;
+  height: 40vh;
+  z-index: 2;
+}
+
+.bot-card-5 {
+  left: 200px;
+  width: 150px;
+  height: 30vh;
+  z-index: 1;
+}/*# sourceMappingURL=MyBots.css.map */
