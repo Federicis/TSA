@@ -7,6 +7,7 @@ import { AuthProvider } from "./context/AuthProvider";
 import CreateBot from "./pages/Bots/CreateBot/CreateBot";
 import LoginPage from "./pages/Login/Login";
 import SignUpPage from "./pages/SignUp/SignUp";
+import Navbar from "./components/Navbar/Navbar";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -14,6 +15,7 @@ function App() {
 	return (
 		<BrowserRouter>
 			<AuthProvider>
+				<Navbar />
 				<Routes>
 					<Route path="/" element={<PersistLogin />}>
 						<Route element={<RequireAuth />}>
