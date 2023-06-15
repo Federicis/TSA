@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
+import AuthContext from "../../context/AuthProvider";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -12,6 +13,8 @@ import {
 
 export default function Navbar() {
 	const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+	const { auth } = useContext(AuthContext);
 
 	useEffect(() => {
 		const handleResize = () => {
@@ -27,7 +30,7 @@ export default function Navbar() {
 
 	const isMobile = windowWidth < 750;
 
-	return (
+	return auth.accessToken ? (
 		<nav className="navbar">
 			<div className="links">
 				<Link to="/">{isMobile ? <FontAwesomeIcon icon={faHome} /> : "Home"}</Link>
@@ -42,5 +45,7 @@ export default function Navbar() {
 				{isMobile ? <FontAwesomeIcon icon={faSignOutAlt} /> : "Log Out"}
 			</Link>
 		</nav>
+	) : (
+		<></>
 	);
 }
