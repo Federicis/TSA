@@ -24,30 +24,27 @@ public class BotService {
     private final JwtService jwtService;
     private final UserRepository userRepository;
 
-
     public List<BotModel> getBots() {
         String username = jwtService.getCurrentUserUsername();
         UserModel user = userRepository.findByUsername(username).orElseThrow(
-                () -> new IllegalStateException("user with username " + username + " does not exist")
-        );
+                () -> new IllegalStateException("user with username " + username + " does not exist"));
         return botRepository.findByUser(user).orElse(null);
     }
 
     public BotModel getBotById(Long id) {
         String username = jwtService.getCurrentUserUsername();
         BotModel bot = botRepository.findById(id).orElseThrow(() -> new IllegalStateException(
-                "bot with id " + id + " does not exist"
-        ));
-        if(Objects.equals(bot.getUser().getUsername(), username) || jwtService.isAdmin())
+                "bot with id " + id + " does not exist"));
+        if (Objects.equals(bot.getUser().getUsername(), username) || jwtService.isAdmin())
             return bot;
-        else throw new IllegalStateException("bot with id " + id + " does not belong to user " + username);
+        else
+            throw new IllegalStateException("bot with id " + id + " does not belong to user " + username);
     }
 
     public BotModel addNewBot(BotModel bot) {
         String username = jwtService.getCurrentUserUsername();
         UserModel user = userRepository.findByUsername(username).orElseThrow(
-                () -> new IllegalStateException("user with username " + username + " does not exist")
-        );
+                () -> new IllegalStateException("user with username " + username + " does not exist"));
         bot.setUser(user);
         return botRepository.save(bot);
     }
@@ -55,28 +52,27 @@ public class BotService {
     public void deleteBot(Long id) {
         String username = jwtService.getCurrentUserUsername();
         BotModel bot = botRepository.findById(id).orElseThrow(() -> new IllegalStateException(
-                "bot with id " + id + " does not exist"
-        ));
-        System.out.println( bot.getUser().getUsername());
-        if(! Objects.equals(bot.getUser().getUsername(), username) && !jwtService.isAdmin())
+                "bot with id " + id + " does not exist"));
+        System.out.println(bot.getUser().getUsername());
+        if (!Objects.equals(bot.getUser().getUsername(), username) && !jwtService.isAdmin())
             throw new IllegalStateException("this bot does not belong to the user");
         botRepository.deleteById(id);
     }
 
     @Transactional
-    public void updateBot(BotModel newBot){
+    public void updateBot(BotModel newBot) {
         Long id = newBot.getId();
         String username = jwtService.getCurrentUserUsername();
         BotModel oldBot = botRepository.findById(id)
                 .orElseThrow(() -> new IllegalStateException(
-                        "bot with id " + id + " does not exist"
-                ));
+                        "bot with id " + id + " does not exist"));
         if (oldBot.getUser().getUsername() != newBot.getUser().getUsername())
             throw new IllegalStateException("cannot change the owner of the bot");
-        if(! Objects.equals(oldBot.getUser().getUsername(), jwtService.getCurrentUserUsername()) && !jwtService.isAdmin())
+        if (!Objects.equals(oldBot.getUser().getUsername(), jwtService.getCurrentUserUsername())
+                && !jwtService.isAdmin())
             throw new IllegalStateException("this bot does not belong to the user");
 
-        //update each field
+        // update each field
         botRepository.save(newBot);
     }
 }

@@ -1,0 +1,223 @@
+.my-bots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.my-bots-heading {
+  position: relative;
+  top: -30vh;
+}
+
+.bots-carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  position: relative;
+  border: 1px solid black;
+}
+
+.bot-card {
+  background-color: var(--card-white);
+  border-radius: 7px;
+  box-shadow: 0px 3px 5px 1px rgba(0, 0, 0, 0.5);
+  position: absolute;
+  display: grid;
+  grid-template-areas: "t t" "r r" "e d";
+  grid-template-rows: 1fr 3fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  padding: 10px;
+  box-sizing: border-box;
+  align-items: center;
+  justify-items: center;
+}
+.bot-card .bot-name {
+  margin: 0;
+  grid-area: t;
+  text-align: center;
+}
+.bot-card .edit-bot-button {
+  width: 100%;
+  height: 50%;
+  border: none;
+  color: white;
+  font-weight: bold;
+  border-radius: 7px;
+  background: linear-gradient(to right, var(--orange), var(--red));
+  grid-area: e;
+}
+.bot-card .edit-bot-button a {
+  text-decoration: none;
+  color: white;
+}
+.bot-card .delete-bot-button {
+  width: 100%;
+  height: 50%;
+  border: none;
+  color: white;
+  font-weight: bold;
+  border-radius: 7px;
+  background-color: var(--button-black);
+  grid-area: d;
+}
+.bot-card .bot-routines {
+  grid-area: r;
+  align-self: center;
+  justify-self: center;
+  height: 100%;
+  width: 100%;
+  overflow-y: scroll;
+}
+.bot-card .bot-routines-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.bot-card .routine-list-item {
+  text-decoration: none;
+  font-weight: bold;
+  height: 10%;
+  background-color: #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border-radius: 5px;
+}
+.bot-card .routine-list-item p {
+  margin: 0;
+}
+.bot-card .no-routines {
+  text-align: center;
+}
+
+.bot-name {
+  font-size: 24px;
+  align-self: end;
+}
+
+.prev-bot-button {
+  position: absolute;
+  left: -400px;
+  width: 32px;
+  height: 32px;
+}
+
+.next-bot-button {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  right: -400px;
+}
+
+.next-bot-button:hover,
+.prev-bot-button:hover,
+button:hover {
+  cursor: pointer;
+}
+
+.bot-card-3 {
+  width: 300px;
+  height: 50vh;
+  z-index: 3;
+}
+
+.bot-card-1 {
+  right: 200px;
+  width: 150px;
+  height: 30vh;
+  z-index: 1;
+}
+
+.bot-card-2 {
+  right: 80px;
+  width: 200px;
+  height: 40vh;
+  z-index: 2;
+}
+
+.bot-card-4 {
+  left: 80px;
+  width: 200px;
+  height: 40vh;
+  z-index: 2;
+}
+
+.bot-card-5 {
+  left: 200px;
+  width: 150px;
+  height: 30vh;
+  z-index: 1;
+}
+
+@media screen and (max-width: 1100px) {
+  .bot-card-3 {
+    width: 250px;
+    height: 40vh;
+  }
+  .bot-card-1 {
+    right: 150px;
+    width: 150px;
+    height: 25vh;
+  }
+  .bot-card-2 {
+    right: 80px;
+    width: 150px;
+    height: 33vh;
+  }
+  .bot-card-4 {
+    left: 80px;
+    width: 150px;
+    height: 33vh;
+  }
+  .bot-card-5 {
+    left: 150px;
+    width: 150px;
+    height: 25vh;
+  }
+  .prev-bot-button {
+    left: -350px;
+  }
+  .next-bot-button {
+    right: -350px;
+  }
+}
+@media screen and (max-width: 750px) {
+  .my-bots-heading {
+    font-size: 24px;
+  }
+  .bot-card-3 {
+    width: 60vw;
+    height: 50vh;
+  }
+  .bot-card-1,
+  .bot-card-2,
+  .bot-card-4,
+  .bot-card-5 {
+    display: none;
+  }
+  .prev-bot-button {
+    left: -40vw;
+  }
+  .next-bot-button {
+    right: -40vw;
+  }
+}
+@media screen and (max-width: 450px) {
+  .bot-card-3 {
+    width: 70vw;
+  }
+  .prev-bot-button {
+    left: -45vw;
+  }
+  .next-bot-button {
+    right: -45vw;
+  }
+}/*# sourceMappingURL=MyBots.css.map */
