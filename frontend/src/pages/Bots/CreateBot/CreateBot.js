@@ -1,10 +1,6 @@
 import { useState, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import "./CreateBot.css";
-import parse from "html-react-parser";
-// import CreateBotForm1 from "../../../components/Forms/CreateBotForm1";
 import {
   CreateBotForm1,
   CreateBotForm2,

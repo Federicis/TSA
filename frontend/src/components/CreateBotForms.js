@@ -19,6 +19,7 @@ export function CreateBotForm1(props) {
           id="name"
           value={props.name}
           onChange={(e) => props.setName(e.target.value)}
+          required
         />
       </div>
       <div className="input-container">
@@ -56,6 +57,7 @@ export function CreateBotForm2(props) {
           autoComplete="off"
           value={props.redditUsername}
           onChange={(e) => props.setRedditUsername(e.target.value)}
+          required
         />
       </div>
       <div className="input-container">
@@ -96,6 +98,7 @@ export function CreateBotForm3(props) {
           autoComplete="off"
           value={props.redditClientId}
           onChange={(e) => props.setRedditClientId(e.target.value)}
+          required
         />
       </div>
       <div className="input-container">
