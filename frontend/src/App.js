@@ -9,6 +9,7 @@ import MyBotsPage from "./pages/Bots/MyBots/MyBotsPage";
 import LoginPage from "./pages/Login/Login";
 import SignUpPage from "./pages/SignUp/SignUp";
 import Navbar from "./components/Navbar/Navbar";
+import Logout from "./components/Logout";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -23,6 +24,7 @@ function App() {
 							<Route index element={<Main prop1={"abcd"} prop2={"efgh"} />} />
 							<Route path="create-bot" element={<CreateBot />} />
 							<Route path="my-bots" element={<MyBotsPage />} />
+							<Route path="logout" element={<Logout />} />
 						</Route>
 						<Route path="login" element={<LoginPage />} />
 						<Route path="sign-up" element={<SignUpPage />} />
