@@ -3,9 +3,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import "./CreateBot.css";
+import parse from "html-react-parser";
+// import CreateBotForm1 from "../../../components/Forms/CreateBotForm1";
+import {
+  CreateBotForm1,
+  CreateBotForm2,
+  CreateBotForm3,
+} from "../../../components/CreateBotForms";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateBot() {
-  const [passwordVisible, setPasswordVisible] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [redditUsername, setRedditUsername] = useState("");
@@ -14,6 +21,8 @@ export default function CreateBot() {
   const [redditClientSecret, setRedditClientSecret] = useState("");
   const [error, setError] = useState("");
   const axios = useAxiosPrivate();
+  const [step, setStep] = useState(0); // 0 = name, 1 = reddit, 2 = client, 3 = finish
+  const navigate = useNavigate();
 
   // empty the error when inputs change
   useEffect(() => {
@@ -46,6 +55,7 @@ export default function CreateBot() {
       );
       console.log(response.data);
       console.log(response.status);
+      navigate("/my-bots");
     } catch (err) {
       console.log(err);
       if (err.response) {
@@ -59,91 +69,38 @@ export default function CreateBot() {
     }
   };
 
+  const props = {
+    name,
+    setName,
+    description,
+    setDescription,
+    error,
+    setError,
+    redditUsername,
+    setRedditUsername,
+    redditPassword,
+    setRedditPassword,
+    redditClientId,
+    setRedditClientId,
+    redditClientSecret,
+    setRedditClientSecret,
+    step,
+    setStep,
+    handleSubmit,
+  };
+
   return (
     <main className="create-bot-main">
-      <h1 className="create-bot-heading">Create a new Bot</h1>
-      <form className="create-bot-form" onSubmit={handleSubmit}>
-        <p className="error-div">{error}</p>
-        <label htmlFor="name" className="name-label">
-          Name
-        </label>
-        <input
-          type="text"
-          placeholder="Name"
-          className="name-input"
-          name="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-        />
-        <label htmlFor="description" className="description-label">
-          Description
-        </label>
-        <textarea
-          placeholder="Description"
-          className="description-input"
-          name="description"
-          value={description}
-          rows="4"
-          cols="50"
-          onChange={(e) => setDescription(e.target.value)}
-        />
-        <label htmlFor="redditUsername" className="reddit-username-label">
-          Reddit Username of the Bot
-        </label>
-        <input
-          type="text"
-          placeholder="Reddit Username"
-          name="redditUsername"
-          className="reddit-username-input"
-          value={redditUsername}
-          onChange={(e) => setRedditUsername(e.target.value)}
-        />
-        <label htmlFor="redditPassword" className="reddit-password-label">
-          Reddit Password of the Bot
-        </label>
-        <div className="password-input-div">
-          <input
-            type={!passwordVisible ? "password" : "text"}
-            name="password"
-            className="password-input"
-            placeholder="Password"
-            onChange={(e) => setRedditPassword(e.target.value)}
-            required
-          />
-          <FontAwesomeIcon
-            onClick={() => setPasswordVisible(!passwordVisible)}
-            className="eye-icon"
-            icon={passwordVisible ? faEyeSlash : faEye}
-          />
-        </div>
-        <label htmlFor="redditClientId" className="reddit-client-id-label">
-          Reddit Client ID
-        </label>
-        <input
-          type="text"
-          placeholder="Reddit Client ID"
-          className="reddit-client-id-input"
-          name="redditClientId"
-          value={redditClientId}
-          onChange={(e) => setRedditClientId(e.target.value)}
-        />
-        <label
-          htmlFor="redditClientSecret"
-          className="reddit-client-secret-label"
-        >
-          Reddit Client Secret
-        </label>
-        <input
-          type="text"
-          placeholder="Reddit Client Secret"
-          className="reddit-client-secret-input"
-          name="redditClientSecret"
-          value={redditClientSecret}
-          onChange={(e) => setRedditClientSecret(e.target.value)}
-        />
-        <input type="submit" className="submit-input" value="Create Bot" />
-      </form>
+      <h2 className="create-bot-heading">👋Create a new bot</h2>
+      {/* <div className="create-bot-container"> */}
+      {step == 0 ? (
+        <CreateBotForm1 {...props} />
+      ) : step == 1 ? (
+        <CreateBotForm2 {...props} />
+      ) : (
+        <CreateBotForm3 {...props} />
+      )}
+      {/* </div> */}
     </main>
   );
 }

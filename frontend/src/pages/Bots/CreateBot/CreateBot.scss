@@ -1,12 +1,11 @@
 .create-bot-main {
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
   flex-direction: column;
+  column-gap: 5vh;
   width: 100vw;
-  // height: 80vh;
-  margin-top: 10vh;
-  margin-bottom: 10vh;
+  height: 100vh;
 }
 
 .error-div {
@@ -16,27 +15,35 @@
   margin: 0;
 }
 
-.create-bot-heading {
-  font-size: 40px;
-  font-weight: normal;
-  margin-top: 0;
-}
-
 .create-bot-form {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: 30px;
-
-  input {
-    width: 360px;
-    padding: 14px 20px;
-    font-size: 15px;
-    border-radius: 10px;
-    border: none;
-    box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.1);
-    background-color: var(--text-white);
+  gap: 15px;
+  background-color: var(--text-white);
+  width: 35vw;
+  height: 45vh;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.1);
+  .input-container {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    input,
+    textarea {
+      padding: 14px 20px;
+      font-size: 15px;
+      border-radius: 10px;
+      border: none;
+      box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.1);
+      background-color: var(--text-white);
+    }
+    textarea {
+      height: 15vh;
+      resize: none;
+    }
   }
 
   .submit-input {
@@ -58,13 +65,6 @@
 }
 
 @media screen and (max-width: 600px) {
-  .create-bot-main {
-    height: 60vh;
-    margin-top: 20vh;
-  }
-  .create-bot-heading {
-    font-size: 36px;
-  }
   .create-bot-form input {
     width: 70vw;
   }
