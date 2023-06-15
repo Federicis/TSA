@@ -37,7 +37,6 @@ export function CreateBotForm1(props) {
 }
 
 export function CreateBotForm2(props) {
-  const [passwordText, setPasswordText] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   return (
@@ -84,7 +83,6 @@ export function CreateBotForm2(props) {
 }
 
 export function CreateBotForm3(props) {
-  const [passwordText, setPasswordText] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   return (
@@ -119,7 +117,7 @@ export function CreateBotForm3(props) {
           />
         </div>
       </div>
-      <input type="submit" className="submit-input" value="Finish" />
+      <input type="submit" className="submit-input" value="Create" />
     </form>
   );
 }
