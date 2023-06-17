@@ -11,11 +11,11 @@ import LoginPage from "./pages/Login/Login";
 import SignUpPage from "./pages/SignUp/SignUp";
 import Navbar from "./components/Navbar/Navbar";
 import Logout from "./components/Logout";
+import LandingPage from "./pages/LandingPage/LandingPage";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
-
 	return (
 		<BrowserRouter>
 			<AuthProvider>
@@ -23,12 +23,13 @@ function App() {
 				<Routes>
 					<Route path="/" element={<PersistLogin />}>
 						<Route element={<RequireAuth />}>
-							<Route index element={<Main prop1={"abcd"} prop2={"efgh"} />} />
+							{/* <Route index element={<Main prop1={"abcd"} prop2={"efgh"} />} /> */}
 							<Route path="create-bot" element={<CreateBot />} />
 							<Route path="my-bots" element={<MyBotsPage />} />
-              <Route path="edit-bot" element={<EditBotPage />} />
+							<Route path="edit-bot" element={<EditBotPage />} />
 							<Route path="logout" element={<Logout />} />
 						</Route>
+						<Route index element={<LandingPage />} />
 						<Route path="login" element={<LoginPage />} />
 						<Route path="sign-up" element={<SignUpPage />} />
 					</Route>
