@@ -41,6 +41,9 @@
   text-align: center;
 }
 .bot-card .edit-bot-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-decoration: none;
   color: white;
   text-align: center;

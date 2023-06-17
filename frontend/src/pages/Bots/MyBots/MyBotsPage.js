@@ -77,7 +77,7 @@ export default function MyBotsPage() {
 										to="/edit-bot"
 										state={{ id: bots[currIndex].id }}
 									>
-										Edit
+										<p>Edit</p>
 									</Link>
 
 									<button className="delete-bot-button" onClick={handleDelete}>
