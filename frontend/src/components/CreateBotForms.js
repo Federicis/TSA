@@ -117,7 +117,11 @@ export function CreateBotForm3(props) {
           />
         </div>
       </div>
-      <input type="submit" className="submit-input" value="Create" />
+      <input
+        type="submit"
+        className="submit-input"
+        value={props.edit ? "Edit" : "Create"}
+      />
     </form>
   );
 }

@@ -63,16 +63,18 @@ public class BotService {
     public void updateBot(BotModel newBot) {
         Long id = newBot.getId();
         String username = jwtService.getCurrentUserUsername();
+        UserModel user = userRepository.findByUsername(username).orElseThrow(
+                () -> new IllegalStateException("user with username " + username + " does not exist"));
         BotModel oldBot = botRepository.findById(id)
                 .orElseThrow(() -> new IllegalStateException(
                         "bot with id " + id + " does not exist"));
-        if (oldBot.getUser().getUsername() != newBot.getUser().getUsername())
-            throw new IllegalStateException("cannot change the owner of the bot");
-        if (!Objects.equals(oldBot.getUser().getUsername(), jwtService.getCurrentUserUsername())
+        if (!Objects.equals(oldBot.getUser().getUsername(), username)
                 && !jwtService.isAdmin())
             throw new IllegalStateException("this bot does not belong to the user");
 
         // update each field
-        botRepository.save(newBot);
+      newBot.setRoutines(oldBot.getRoutines());
+      newBot.setUser(user);
+      botRepository.save(newBot);
     }
 }
