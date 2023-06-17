@@ -3,6 +3,7 @@ package com.example.botrunner.executor;
 import ca.arnah.reddit4j.objects.reddit.Link;
 import lombok.Data;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import java.util.List;
 public class RunningData {
     List<Link> posts = new ArrayList<>();
     List<Link> comments = new ArrayList<>();
+    Timestamp lastRun;
 
 
 }
