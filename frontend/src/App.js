@@ -23,7 +23,6 @@ function App() {
 				<Routes>
 					<Route path="/" element={<PersistLogin />}>
 						<Route element={<RequireAuth />}>
-							{/* <Route index element={<Main prop1={"abcd"} prop2={"efgh"} />} /> */}
 							<Route path="create-bot" element={<CreateBot />} />
 							<Route path="my-bots" element={<MyBotsPage />} />
 							<Route path="edit-bot" element={<EditBotPage />} />
