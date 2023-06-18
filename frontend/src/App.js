@@ -11,6 +11,7 @@ import LoginPage from "./pages/Login/Login";
 import SignUpPage from "./pages/SignUp/SignUp";
 import Navbar from "./components/Navbar/Navbar";
 import Logout from "./components/Logout";
+import LandingPage from "./pages/LandingPage/LandingPage";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import CreateRoutine from "./pages/Routines/CreateRoutine/CreateRoutine";
@@ -24,7 +25,6 @@ function App() {
         <Routes>
           <Route path="/" element={<PersistLogin />}>
             <Route element={<RequireAuth />}>
-              <Route index element={<Main prop1={"abcd"} prop2={"efgh"} />} />
               <Route path="create-bot" element={<CreateBot />} />
               <Route path="my-bots" element={<MyBotsPage />} />
               <Route path="edit-bot" element={<EditBotPage />} />

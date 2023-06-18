@@ -38,7 +38,7 @@ export default function Login() {
 			setAuth(data);
 
 			// redirect user to index page if login was successful
-			navigate("/");
+			navigate("/my-bots");
 		} catch (err) {
 			console.log(err);
 			if (err.response) {
