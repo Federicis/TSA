@@ -7,11 +7,11 @@ TSA is an application that allows you to create reddit bots without requiring co
 # Who Are TSAA..?
 
 Some would say that TSAA.. is the best team of developers. We would like to contratict them, but they are right.
-The team consists of 4 members:
-Alin Sava 
-Vlad Ciocoiu
-Alex Federicis
-Victor Badulescu
+The team consists of 4 members:  
+Alin Sava  
+Vlad Ciocoiu  
+Alex Federicis  
+Victor Badulescu  
 
 # Backlog
 
