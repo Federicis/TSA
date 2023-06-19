@@ -15,17 +15,19 @@ export default function CreateRoutine() {
   const axios = useAxiosPrivate();
   const location = useLocation();
   const botId = location.state.botId;
-  const taskTypes = ["Comment", "Find"];
   const [taskType, setTaskType] = useState("Comment");
   const [comment, setComment] = useState("");
   const [keyword, setKeyword] = useState("");
   const [subreddit, setSubreddit] = useState("");
+  const [tasks, setTasks] = useState([]);
   const navigate = useNavigate();
 
+  const taskTypes = ["Comment", "Find"];
+
   const intervalOptions = [
-    { key: "DAILY", value: "Daily" },
-    { key: "HOURLY", value: "Hourly" },
-    { key: "ASAP", value: "ASAP" },
+    { key: "DAILY", value: "daily" },
+    { key: "HOURLY", value: "hourly" },
+    { key: "ASAP", value: "as often as possible" },
   ];
 
   // empty the error when inputs change
@@ -39,6 +41,7 @@ export default function CreateRoutine() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(tasks);
     try {
       const requestBody = {
         id: null,
@@ -46,6 +49,7 @@ export default function CreateRoutine() {
         repeatable,
         interval,
         botId,
+        tasks,
       };
       console.log("bot id: " + botId);
       console.log(requestBody);
@@ -55,7 +59,7 @@ export default function CreateRoutine() {
       );
       console.log(response.data);
       console.log(response.status);
-      navigate("/show-routines", { state: { botId } });
+      navigate("/show-routines", { state: { botId: botId } });
     } catch (err) {
       console.log(err);
       if (err.response) {
@@ -67,6 +71,27 @@ export default function CreateRoutine() {
         setError("Unknown error.");
       }
     }
+  };
+
+  const closeTaskFrom = (e) => {
+    e.preventDefault();
+    if (e.currentTarget != e.target) return;
+    setCreateTask(false);
+  };
+
+  const addTask = (e) => {
+    e.preventDefault();
+    console.log("in add task");
+    let newTask =
+      taskType === "Comment"
+        ? { taskType: taskType.toUpperCase(), comment: comment }
+        : {
+            taskType: taskType.toUpperCase(),
+            keywords: keyword.split(" "),
+            subreddit: subreddit,
+          };
+    setTasks([...tasks, newTask]);
+    setCreateTask(false);
   };
 
   return (
@@ -125,7 +150,74 @@ export default function CreateRoutine() {
           value="Create"
           onClick={handleSubmit}
         />
+        <button
+          className="submit-input"
+          onClick={(e) => {
+            e.preventDefault();
+            setCreateTask(true);
+          }}
+        >
+          Add task
+        </button>
       </form>
+      {createTask && (
+        <div className="create-task-container" onClick={closeTaskFrom}>
+          <form className="create-task-form">
+            <div className="input-container">
+              <label htmlFor="select-task-type">Task</label>
+              <select
+                name="select-task-type"
+                onChange={(e) => setTaskType(e.target.value)}
+              >
+                {taskTypes.map((type) => (
+                  <option value={type}>{type}</option>
+                ))}
+              </select>
+            </div>
+            {taskType === "Comment" ? (
+              <div className="input-container">
+                <label htmlFor="task-name">Write a comment</label>
+                <textarea
+                  name="task-name"
+                  id="task-name"
+                  cols="30"
+                  rows="10"
+                  onChange={(e) => setComment(e.target.value)}
+                ></textarea>
+              </div>
+            ) : (
+              taskType === "Find" && (
+                <div className="find-container">
+                  <div className="input-container">
+                    <label htmlFor="keyword">Find</label>
+                    <input
+                      type="text"
+                      name="keyword"
+                      placeholder="Enter a keyword"
+                      onChange={(e) => setKeyword(e.target.value)}
+                    />
+                  </div>
+                  <div className="input-container">
+                    <label htmlFor="subreddit">In</label>
+                    <input
+                      type="text"
+                      name="subreddit"
+                      placeholder="Enter the name of the subreddit"
+                      onChange={(e) => setSubreddit(e.target.value)}
+                    />
+                  </div>
+                </div>
+              )
+            )}
+            <input
+              type="submit"
+              className="submit-input"
+              value="Create"
+              onClick={addTask}
+            />
+          </form>
+        </div>
+      )}
     </main>
   );
 }

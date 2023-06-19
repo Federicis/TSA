@@ -18,6 +18,7 @@ import CreateRoutine from "./pages/Routines/CreateRoutine/CreateRoutine";
 import ShowRoutines from "./pages/Routines/ShowRoutines/ShowRoutines";
 
 function App() {
+
 	return (
 		<BrowserRouter>
 			<AuthProvider>

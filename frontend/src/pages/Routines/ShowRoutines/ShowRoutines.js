@@ -60,7 +60,7 @@ export default function ShowRoutines() {
       <FontAwesomeIcon
         icon={faPlus}
         className="add-routine-icon"
-        onClick={() => navigate("/create-routine", { state: { botId } })}
+        onClick={() => navigate("/create-routine", { state: { botId: botId } })}
       />
     </main>
   );
