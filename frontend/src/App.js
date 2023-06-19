@@ -32,6 +32,7 @@ function App() {
               <Route path="show-routines" element={<ShowRoutines />} />
               <Route path="logout" element={<Logout />} />
             </Route>
+            <Route index element={<LandingPage />} />
             <Route path="login" element={<LoginPage />} />
             <Route path="sign-up" element={<SignUpPage />} />
           </Route>
