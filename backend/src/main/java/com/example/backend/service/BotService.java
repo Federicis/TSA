@@ -1,20 +1,15 @@
 package com.example.backend.service;
 
-import com.example.backend.DTO.BotDTO;
-import com.example.backend.Util.Mapper.BotMapper;
 import com.example.backend.model.BotModel;
 import com.example.backend.model.UserModel;
 import com.example.backend.repository.BotRepository;
-import com.example.backend.repository.TaskRepository;
 import com.example.backend.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -73,8 +68,8 @@ public class BotService {
             throw new IllegalStateException("this bot does not belong to the user");
 
         // update each field
-      newBot.setRoutines(oldBot.getRoutines());
-      newBot.setUser(user);
-      botRepository.save(newBot);
+        newBot.setRoutines(oldBot.getRoutines());
+        newBot.setUser(user);
+        botRepository.save(newBot);
     }
 }

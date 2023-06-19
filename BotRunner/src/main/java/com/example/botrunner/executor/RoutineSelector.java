@@ -5,7 +5,6 @@ import com.example.botrunner.database.services.BotService;
 import com.example.botrunner.database.services.RecordService;
 import com.example.botrunner.database.services.RoutineService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
@@ -27,31 +26,27 @@ public class RoutineSelector {
         List<RoutineModel> routines = routineService.getAllRoutines();
         // TODO: filter out the routines based on the last execution time (implement taskResults first)
         List<RoutineModel> routinesSelected = new ArrayList<>();
-        for(RoutineModel routine: routines)
-        {
+        for (RoutineModel routine : routines) {
             Timestamp lastRun = new Timestamp(0);
             var lastRoutineRecord = recordService.getLastSuccesfulRoutineRecord(routine.getId());
-            if(lastRoutineRecord.isPresent())
-            {
+            if (lastRoutineRecord.isPresent()) {
                 lastRun = lastRoutineRecord.get().getTimestamp();
             }
 
 //            set a variabile required time depending on the interval
             long reqTime = 0;
-            switch (routine.getInterval())
-            {
+            switch (routine.getInterval()) {
                 case DAILY:
-                    reqTime = 24*60*60*1000;
+                    reqTime = 24 * 60 * 60 * 1000;
                     break;
                 case HOURLY:
-                    reqTime = 60*60*1000;
+                    reqTime = 60 * 60 * 1000;
                     break;
                 case ASAP: //1 minute
-                    reqTime = 60*1000;
+                    reqTime = 60 * 1000;
                     break;
             }
-            if (System.currentTimeMillis() - lastRun.getTime() > reqTime)
-            {
+            if (System.currentTimeMillis() - lastRun.getTime() > reqTime) {
                 routinesSelected.add(routine);
             }
         }

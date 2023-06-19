@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 @DiscriminatorValue("COMMENT")
 public class CommentTaskModel extends TaskModel {
     private String comment;
+
     @Transient
     @Override
     public TaskType getTaskType() {

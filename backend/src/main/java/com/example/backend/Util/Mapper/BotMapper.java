@@ -10,6 +10,7 @@ public interface BotMapper {
 
     @Mapping(target = "userId", source = "user.id")
     BotDTO toDTO(BotModel bot);
+
     @Mapping(target = "user.id", source = "userId")
     BotModel toModel(BotDTO bot);
 }

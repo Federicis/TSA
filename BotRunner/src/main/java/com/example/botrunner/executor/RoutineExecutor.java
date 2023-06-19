@@ -4,14 +4,9 @@ import ca.arnah.reddit4j.RedditUserClient;
 import com.example.botrunner.database.models.RoutineModel;
 import com.example.botrunner.database.models.record.RoutineRecord;
 import com.example.botrunner.database.models.task.TaskModel;
-import com.example.botrunner.database.services.RecordService;
 import com.example.botrunner.executor.taskExecutor.TaskExecutor;
 import com.example.botrunner.executor.taskExecutor.TaskExecutorFactory;
-import lombok.Builder;
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +26,7 @@ public class RoutineExecutor implements Runnable {
         this.redditUserClient = redditUserClient;
         record.setRoutine(routine);
     }
+
     public RoutineExecutor(RunningData runningData, RoutineModel routine, RedditUserClient redditUserClient) {
         this.runningData = runningData;
         this.routine = routine;
@@ -40,21 +36,20 @@ public class RoutineExecutor implements Runnable {
 
     public void run() {
         prepare();
-        try{
+        try {
             for (TaskExecutor taskExecutor : taskExecutors) {
                 taskExecutor.execute(runningData, redditUserClient);
             }
             record.setWasSuccessful(true);
             record.setMessage("Routine executed successfully");
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             record.setWasSuccessful(true);
             record.setMessage(e.getMessage());
         }
     }
-    private void prepare(){
-        for(TaskModel task : routine.getTasks()){
+
+    private void prepare() {
+        for (TaskModel task : routine.getTasks()) {
             taskExecutors.add(TaskExecutorFactory.createTaskExecutor(task));
         }
     }

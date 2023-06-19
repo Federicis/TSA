@@ -20,23 +20,19 @@ public class RecordService {
         taskRecordRepository.deleteAll();
     }
 
-    public void addTaskRecord(TaskRecord taskRecord)
-    {
+    public void addTaskRecord(TaskRecord taskRecord) {
         taskRecordRepository.save(taskRecord);
     }
 
-    public void addRoutineRecord(RoutineRecord routineRecord)
-    {
+    public void addRoutineRecord(RoutineRecord routineRecord) {
         routineRecordRepository.save(routineRecord);
     }
 
-    public Optional<RoutineRecord> getLastSuccesfulRoutineRecord(Long routineId)
-    {
+    public Optional<RoutineRecord> getLastSuccesfulRoutineRecord(Long routineId) {
         return Optional.ofNullable(routineRecordRepository.getLastSuccesfulRoutineRecord(routineId));
     }
 
-    public Optional<TaskRecord> getLastSuccesfulTaskRecord(Long taskId)
-    {
+    public Optional<TaskRecord> getLastSuccesfulTaskRecord(Long taskId) {
         return Optional.ofNullable(taskRecordRepository.getLastSuccesfulTaskRecord(taskId));
     }
 }

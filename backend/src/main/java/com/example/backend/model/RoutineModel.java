@@ -24,7 +24,7 @@ public class RoutineModel {
     private BotModel bot;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @OrderColumn(name="task_index")
+    @OrderColumn(name = "task_index")
     private List<TaskModel> tasks;
 
     @Column(name = "`repeatable`")

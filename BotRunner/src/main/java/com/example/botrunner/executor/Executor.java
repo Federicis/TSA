@@ -7,7 +7,6 @@ import ca.arnah.reddit4j.objects.app.script.Credentials;
 import ca.arnah.reddit4j.objects.app.script.PersonalUseScript;
 import ca.arnah.reddit4j.objects.app.script.UserAgent;
 import com.example.botrunner.database.models.BotModel;
-import com.example.botrunner.database.models.RoutineModel;
 import com.example.botrunner.database.models.record.RoutineRecord;
 import com.example.botrunner.database.services.RecordService;
 import lombok.RequiredArgsConstructor;
@@ -26,8 +25,9 @@ public class Executor {
 
     private final RoutineSelector routineSelector;
     private final RecordService recordService;
+
     public void execute() {
-        while(true) {
+        while (true) {
             List<Pair<RoutineExecutor, Thread>> routineExecutors = new ArrayList<>();
             for (var routine : routineSelector.getRoutinesAwaitingExecution()) {
                 RunningData runningData = new RunningData();
@@ -57,10 +57,12 @@ public class Executor {
             }
         }
     }
-    private void reportData(RoutineRecord record){
+
+    private void reportData(RoutineRecord record) {
         recordService.addRoutineRecord(record);
     }
-    private RedditUserClient getUserClient(BotModel bot){
+
+    private RedditUserClient getUserClient(BotModel bot) {
 
         RedditClientConfig redditClientConfig = new ScriptClientConfig(
                 new PersonalUseScript(bot.getClientId(), bot.getClientSecret()),

@@ -8,8 +8,7 @@ import org.mapstruct.ObjectFactory;
 
 public class TaskFactory {
     @ObjectFactory
-    public static TaskModel createTask(TaskDTO taskDTO)
-    {
+    public static TaskModel createTask(TaskDTO taskDTO) {
         return switch (taskDTO.getTaskType()) {
             case FIND -> new FindTaskModel();
             case COMMENT -> new CommentTaskModel();
