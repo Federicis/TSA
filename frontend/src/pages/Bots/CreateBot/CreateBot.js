@@ -5,7 +5,7 @@ import {
   CreateBotForm1,
   CreateBotForm2,
   CreateBotForm3,
-} from "../../../components/CreateBotForms";
+} from "../CreateBotForms";
 import { useNavigate } from "react-router-dom";
 
 export default function CreateBot() {
@@ -51,7 +51,7 @@ export default function CreateBot() {
       );
       console.log(response.data);
       console.log(response.status);
-      navigate("/my-bots");
+      navigate("/show-routines", { state: { botId: response.data.id } });
     } catch (err) {
       console.log(err);
       if (err.response) {

@@ -67,6 +67,7 @@ export function CreateBotForm2(props) {
             name="password"
             className="password-input"
             autoComplete="new-password"
+            value={props.redditPassword}
             onChange={(e) => props.setRedditPassword(e.target.value)}
             required
           />
@@ -107,6 +108,7 @@ export function CreateBotForm3(props) {
             name="password"
             className="password-input"
             autoComplete="new-password"
+            value={props.redditClientSecret}
             onChange={(e) => props.setRedditClientSecret(e.target.value)}
             required
           />

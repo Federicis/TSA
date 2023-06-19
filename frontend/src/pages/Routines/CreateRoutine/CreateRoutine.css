@@ -1,0 +1,162 @@
+.create-routine-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  -moz-column-gap: 5vh;
+       column-gap: 5vh;
+  width: 100vw;
+  height: 100vh;
+}
+
+.error-div {
+  color: red;
+  font-size: 16px;
+  height: 16px;
+  margin: 0;
+}
+
+.create-routine-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 2vh;
+  background-color: var(--text-white);
+  width: 35vw;
+  height: 55vh;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.1);
+}
+.create-routine-form .input-container {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+}
+.create-routine-form .input-container label {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.create-routine-form .input-container input,
+.create-routine-form .input-container textarea,
+.create-routine-form .input-container select {
+  padding: 14px 20px;
+  font-size: 15px;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0px 0px 20px 3px rgba(0, 0, 0, 0.3);
+  background-color: var(--card-white);
+}
+.create-routine-form .input-container textarea {
+  height: 10vh;
+  resize: none;
+}
+.create-routine-form .password-input-div {
+  position: relative;
+  height: 30px;
+}
+.create-routine-form .password-input-div input {
+  width: 100%;
+  box-sizing: border-box;
+}
+.create-routine-form .eye-icon {
+  position: absolute;
+  left: calc(100% - 20px - 15px);
+  top: 15px;
+  color: #666;
+}
+.create-routine-form .submit-input {
+  box-shadow: none;
+  width: 80%;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 16px;
+  border: none;
+  padding: 10px 20px;
+  margin: 25px 0;
+  color: var(--text-white);
+  background: linear-gradient(to right, var(--red), var(--orange));
+}
+.create-routine-form .submit-input:hover {
+  cursor: pointer;
+}
+
+select {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  background-color: transparent;
+  border: none;
+  margin: 0;
+  width: 100%;
+  font-family: inherit;
+  cursor: inherit;
+  line-height: inherit;
+}
+
+select::-ms-expand {
+  display: none;
+}
+
+.create-task-container {
+  width: 100%;
+  height: 100%;
+  opacity: 0.3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 2vh;
+  background-color: var(--text-white);
+}
+.create-task-container .input-container {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+}
+.create-task-container .input-container label {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.create-task-container .input-container input,
+.create-task-container .input-container textarea,
+.create-task-container .input-container select {
+  padding: 14px 20px;
+  font-size: 15px;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0px 0px 20px 3px rgba(0, 0, 0, 0.3);
+  background-color: var(--card-white);
+}
+.create-task-container .input-container textarea {
+  height: 10vh;
+  resize: none;
+}
+.create-task-container .find-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 80%;
+}
+
+@media screen and (max-width: 850px) {
+  .create-bot-form {
+    width: 70vw;
+    height: 55vh;
+  }
+}
+@media screen and (max-height: 650px) {
+  .create-bot-form {
+    height: 65vh;
+  }
+  .create-bot-heading {
+    margin-top: 20px;
+  }
+}/*# sourceMappingURL=CreateRoutine.css.map */

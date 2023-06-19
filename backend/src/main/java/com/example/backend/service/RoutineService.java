@@ -1,6 +1,7 @@
 package com.example.backend.service;
 
 import com.example.backend.model.RoutineModel;
+import com.example.backend.model.task.TaskModel;
 import com.example.backend.repository.RoutineRepository;
 import com.example.backend.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
@@ -52,14 +53,19 @@ public class RoutineService {
         routineRepository.deleteById(id);
     }
 
-    public void UpdateRoutine(RoutineModel routine)
+    public RoutineModel UpdateRoutine(RoutineModel routine)
     {
-        if(!routineRepository.existsById(routine.getId()))
-            throw new IllegalStateException("this routine does not exist");
-        if(!routineRepository.findById(routine.getId()).get().getBot().getUser().getUsername().equals(jwtService.getCurrentUserUsername()) && !jwtService.isAdmin())
+        RoutineModel oldRoutine =  routineRepository.findById(routine.getId()).orElseThrow(() -> new IllegalStateException(
+                "routine with id " + routine.getId() + " does not exist"));
+        if(!oldRoutine.getBot().getUser().getUsername().equals(jwtService.getCurrentUserUsername()) && !jwtService.isAdmin())
             throw new IllegalAccessError("this routine does not belong to the user");
 
-        routineRepository.save(routine);
+        List<TaskModel> tasks = oldRoutine.getTasks();
+        tasks.addAll(routine.getTasks());
+        routine.setTasks(tasks);
+        routine.setBot(oldRoutine.getBot());
+        return routineRepository.save(routine);
+
     }
 
 }

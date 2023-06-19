@@ -27,7 +27,7 @@
   height: 55vh;
   border-radius: 10px;
   border: none;
-  box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 20px 3px rgba(0, 0, 0, 0.1);
 }
 .create-bot-form .input-container {
   padding-top: 10px;
@@ -47,7 +47,7 @@
   font-size: 15px;
   border-radius: 10px;
   border: none;
-  box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 20px 3px rgba(0, 0, 0, 0.3);
   background-color: var(--card-white);
 }
 .create-bot-form .input-container textarea {
@@ -59,9 +59,14 @@
   height: 30px;
 }
 .create-bot-form .password-input-div input {
+  width: 100%;
+  box-sizing: border-box;
+}
+.create-bot-form .eye-icon {
   position: absolute;
-  left: 0;
-  right: 0;
+  left: calc(100% - 20px - 15px);
+  top: 15px;
+  color: #666;
 }
 .create-bot-form .submit-input {
   box-shadow: none;

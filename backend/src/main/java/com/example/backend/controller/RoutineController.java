@@ -37,7 +37,7 @@ public class RoutineController {
     @PutMapping
     public RoutineDTO updateTask(@RequestBody RoutineDTO routineDTO) {
         RoutineModel routine = routineMapper.toRoutineModel(routineDTO);
-        return routineMapper.toRoutineDTO(routineService.AddNewRoutine(routine));
+        return routineMapper.toRoutineDTO(routineService.UpdateRoutine(routine));
 
     }
 
