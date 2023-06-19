@@ -17,7 +17,7 @@ public class FindTaskExecutor implements TaskExecutor {
     }
 
     @Override
-    public void execute(RunningData runningData, RedditUserClient redditUserClient){
+    public void execute(RunningData runningData, RedditUserClient redditUserClient) {
         Timestamp lastRun;
         if (runningData.getLastRun() == null)
             lastRun = new Timestamp(0);

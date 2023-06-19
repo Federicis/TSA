@@ -1,8 +1,7 @@
 package com.example.backend.model.task;
 
-import com.example.backend.model.enumeration.TaskType;
 import com.example.backend.model.RoutineModel;
-import com.example.backend.model.record.RoutineRecord;
+import com.example.backend.model.enumeration.TaskType;
 import com.example.backend.model.record.TaskRecord;
 import jakarta.persistence.*;
 import lombok.Data;
