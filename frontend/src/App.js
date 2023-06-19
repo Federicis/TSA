@@ -18,28 +18,29 @@ import CreateRoutine from "./pages/Routines/CreateRoutine/CreateRoutine";
 import ShowRoutines from "./pages/Routines/ShowRoutines/ShowRoutines";
 
 function App() {
-  return (
-    <BrowserRouter>
-      <AuthProvider>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<PersistLogin />}>
-            <Route element={<RequireAuth />}>
-              <Route path="create-bot" element={<CreateBot />} />
-              <Route path="my-bots" element={<MyBotsPage />} />
-              <Route path="edit-bot" element={<EditBotPage />} />
-              <Route path="create-routine" element={<CreateRoutine />} />
-              <Route path="show-routines" element={<ShowRoutines />} />
-              <Route path="logout" element={<Logout />} />
-            </Route>
-            <Route index element={<LandingPage />} />
-            <Route path="login" element={<LoginPage />} />
-            <Route path="sign-up" element={<SignUpPage />} />
-          </Route>
-        </Routes>
-      </AuthProvider>
-    </BrowserRouter>
-  );
+
+	return (
+		<BrowserRouter>
+			<AuthProvider>
+				<Navbar />
+				<Routes>
+					<Route path="/" element={<PersistLogin />}>
+						<Route element={<RequireAuth />}>
+							<Route path="create-bot" element={<CreateBot />} />
+							<Route path="my-bots" element={<MyBotsPage />} />
+							<Route path="edit-bot" element={<EditBotPage />} />
+							<Route path="create-routine" element={<CreateRoutine />} />
+							<Route path="show-routines" element={<ShowRoutines />} />
+							<Route path="logout" element={<Logout />} />
+						</Route>
+						<Route index element={<LandingPage />} />
+						<Route path="login" element={<LoginPage />} />
+						<Route path="sign-up" element={<SignUpPage />} />
+					</Route>
+				</Routes>
+			</AuthProvider>
+		</BrowserRouter>
+	);
 }
 
 export default App;

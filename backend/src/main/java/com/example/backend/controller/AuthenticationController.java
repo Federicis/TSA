@@ -1,30 +1,14 @@
 package com.example.backend.controller;
 
-import java.net.http.HttpHeaders;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.repository.query.Param;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ResponseCookie;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.example.backend.DTO.Auth.AuthenticationResponse;
-import com.example.backend.DTO.Auth.LoginRequest;
-import com.example.backend.DTO.Auth.TokenResponse;
-import com.example.backend.DTO.Auth.RegisterRequest;
-import com.example.backend.DTO.Auth.TokenRefreshRequest;
+import com.example.backend.DTO.Auth.*;
 import com.example.backend.service.AuthenticationService;
 import com.example.backend.service.JwtService;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
@@ -69,7 +53,7 @@ public class AuthenticationController {
     @CrossOrigin(allowCredentials = "true", origins = clientURL)
     @PostMapping("/refreshtoken")
     public ResponseEntity<TokenResponse> refreshToken(@CookieValue("refreshToken") String token,
-            @RequestBody TokenRefreshRequest request) {
+                                                      @RequestBody TokenRefreshRequest request) {
         System.out.println("token");
         AuthenticationResponse authResponse = jwtService.refreshToken(token);
 

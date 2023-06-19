@@ -7,7 +7,7 @@ import com.example.botrunner.executor.RunningData;
 
 import java.util.List;
 
-public class CommentTaskExecutor implements TaskExecutor{
+public class CommentTaskExecutor implements TaskExecutor {
     private final CommentTaskModel task;
 
     public CommentTaskExecutor(CommentTaskModel task) {
@@ -18,7 +18,7 @@ public class CommentTaskExecutor implements TaskExecutor{
     public void execute(RunningData runningData, RedditUserClient redditUserClient) {
         List<Link> post = runningData.getPosts();
         post.forEach(link -> {
-           link.getReference(redditUserClient).comment(task.getComment()).execute();
+            link.getReference(redditUserClient).comment(task.getComment()).execute();
         });
     }
 }

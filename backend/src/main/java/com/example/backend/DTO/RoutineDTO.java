@@ -4,6 +4,7 @@ import com.example.backend.model.enumeration.Interval;
 import lombok.Data;
 
 import java.util.List;
+
 @Data
 public class RoutineDTO {
     public Long id;
