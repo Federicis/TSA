@@ -23,9 +23,9 @@ export default function CreateRoutine() {
   const navigate = useNavigate();
 
   const intervalOptions = [
-    { key: "DAILY", value: "daily" },
-    { key: "HOURLY", value: "hourly" },
-    { key: "ASAP", value: "as often as possible" },
+    { key: "DAILY", value: "Daily" },
+    { key: "HOURLY", value: "Hourly" },
+    { key: "ASAP", value: "ASAP" },
   ];
 
   // empty the error when inputs change
