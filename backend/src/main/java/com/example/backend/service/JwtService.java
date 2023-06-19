@@ -1,24 +1,11 @@
 package com.example.backend.service;
 
-import java.security.Key;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Function;
-
-import com.example.backend.model.enumeration.Role;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
-
 import com.example.backend.DTO.Auth.AuthenticationResponse;
 import com.example.backend.model.RefreshTokenModel;
 import com.example.backend.model.UserModel;
+import com.example.backend.model.enumeration.Role;
 import com.example.backend.repository.RefreshTokenRepository;
 import com.example.backend.repository.UserRepository;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -26,8 +13,19 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import java.security.Key;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
 
 @Service
 @RequiredArgsConstructor
@@ -43,6 +41,9 @@ public class JwtService {
 
     @Value("${tsa.refreshSecret}")
     private String REFRESH_SECRET;
+
+    private final long ACCESS_TOKEN_EXPIRATION = 1000 * 60 * 10;
+    private final long REFRESH_TOKEN_EXPIRATION = 1000L * 60 * 60 * 24 * 30;
 
     public String getJwtSecret() {
         return JWT_SECRET;
@@ -118,11 +119,11 @@ public class JwtService {
 
     // uses the other generateToken method to generate a token without extra claims
     public String generateAccessToken(UserDetails userDetails) {
-        return generateToken(new HashMap<>(), userDetails, JWT_SECRET, Long.valueOf(1000 * 60 * 10));
+        return generateToken(new HashMap<>(), userDetails, JWT_SECRET, ACCESS_TOKEN_EXPIRATION);
     }
 
     public String generateRefreshToken(UserDetails userDetails) {
-        return generateToken(new HashMap<>(), userDetails, REFRESH_SECRET, Long.valueOf(1000) * 60 * 60 * 24 * 30);
+        return generateToken(new HashMap<>(), userDetails, REFRESH_SECRET, REFRESH_TOKEN_EXPIRATION);
     }
 
     public boolean validateToken(String token, UserDetails userDetails, String secret) {

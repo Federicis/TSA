@@ -27,6 +27,7 @@ public interface TaskMapper {
             default -> null;
         };
     }
+
     default TaskDTO toTaskDTO(TaskModel taskModel) {
         if (taskModel.getClass() == FindTaskModel.class)
             return toTaskDTO((FindTaskModel) taskModel);

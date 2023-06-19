@@ -7,7 +7,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class RoutineRecord extends Record{
+public class RoutineRecord extends Record {
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "routine_id")
